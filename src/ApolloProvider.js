@@ -1,0 +1,57 @@
+import React from 'react'
+import App from './App'
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    HttpLink,
+    split,
+} from "@apollo/client";
+import { setContext } from '@apollo/client/link/context'
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
+
+const httpLink = new HttpLink({
+    uri: 'http://localhost:5000/graphql'
+})
+
+const wsLink = new WebSocketLink({
+    uri: 'ws://localhost:5000/graphql',
+    options: {
+      reconnect: true
+    }
+  });
+
+const authLink = setContext((request, previousContext) => {
+    const token = localStorage.getItem("jwtToken")
+    return {
+        headers: {
+            Authorization: token ? `Bearer ${token}` : ''
+        }
+    }
+});
+
+const splitLink = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    },
+    wsLink,
+    authLink.concat(httpLink),
+    // httpLink,
+    // authLink,
+  );
+
+const client = new ApolloClient({
+    link: splitLink,
+    cache: new InMemoryCache()
+})
+
+export default (
+    <ApolloProvider client={client}>
+        <App />
+    </ApolloProvider>
+)

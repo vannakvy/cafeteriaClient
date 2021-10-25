@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@font-face {
+  font-family: khmerOsSiemReap;
+  src: url('../fonts/KhmerOSsiemreap.ttf');
+}
+
+@font-face {
+  font-family: khmerOsMuolLight;
+  src: url('../fonts/KhmerOSmuollight.ttf');
+}
+
+@font-face {
+  font-family: tacteng;
+  src: url('../fonts/TACTENG.TTF');
+}
+
