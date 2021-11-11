@@ -28,3 +28,75 @@ code {
   src: url('../fonts/TACTENG.TTF');
 }
 
+
+
+.logo {
+  width: 100%;
+  padding: 10px 20%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.site-layout-content {
+  min-height: 100%;
+  padding: 24px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  margin-top: 10px !important;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: rgb(187, 187, 187);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 10px;
+}
+
+.site-tag-plus {
+  background: #fff;
+  border-style: dashed;
+  cursor: pointer;
+}
+.edit-tag {
+  user-select: none;
+}
+.tag-input {
+  width: 78px !important;
+  margin-right: 8px !important;
+  vertical-align: top !important;
+}
+
+.click-cursor > .ant-badge-status-text {
+  cursor: pointer !important;
+  transition: 0.1s !important;
+}
+.click-cursor > .ant-badge-status-text:hover {
+  color: rgb(197, 197, 197) !important;
+}
+
+.avatar-uploader > .ant-upload {
+  width: 200px !important;
+  height: 200px !important;
+}
