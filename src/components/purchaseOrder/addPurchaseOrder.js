@@ -52,12 +52,6 @@ export default function AddPurchaseOrder() {
     const [supplierData, setSupplierData] = useState({
         date: moment()
     })
-    const [locationData, setLocationData] = useState({
-        lat: 0,
-        long: 0,
-        placename: ""
-    })
-    const [deliverData, setDeliverData] = useState({})
     const [printData, setPrintData] = useState({})
 
     const [addTax, setAddTax] = useState(false)
@@ -261,11 +255,6 @@ export default function AddPurchaseOrder() {
         setSupplierData({
             date: moment()
         })
-        setLocationData({
-            lat: 0,
-            long: 0
-        })
-        setDeliverData({})
         setPrintData({})
     }
 

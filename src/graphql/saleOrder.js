@@ -163,6 +163,7 @@ export const VIEW_SALEORDER_BY_ID = gql`
                     description
                     image
                     um
+                    inStock
                 }
                 price
                 qty

@@ -1,35 +1,5 @@
 import { Image, notification } from "antd";
 
-export function keyMenu(e) {
-    const myArr = e.split("/");
-    let x = ""
-
-    if (myArr[1] === 'product' || myArr[1] === 'subProduct') {
-        x = "/product"
-    } else if (myArr[1] === 'category' || myArr[1] === 'subCategory') {
-        x = "/category"
-    } else if (myArr[1] === 'purchaseorder' || myArr[1] === 'subpurchaseorder') {
-        x = "/purchaseorder"
-    } else if (myArr[1] === 'saleorder' || myArr[1] === 'addsaleorder' || myArr[1] === 'viewsaleorder') {
-        x = "/saleorder"
-    } else if (myArr[1] === 'purchaseorder' || myArr[1] === 'addpurchaseorder' || myArr[1] === 'viewpurchaseorder') {
-        x = "/purchaseorder"
-    } else if (myArr[1] === 'reconciliation' || myArr[1] === 'subreconciliation') {
-        x = "/reconciliation"
-    } else if (myArr[1] === 'customer' || myArr[1] === 'subcustomer') {
-        x = "/customer"
-    } else if (myArr[1] === 'supplier' || myArr[1] === 'subsupplier') {
-        x = "/supplier"
-    } else if (myArr[1] === 'deliver' || myArr[1] === 'subdeliver') {
-        x = "/deliver"
-    }
-
-    else {
-        x = "/"
-    }
-
-    return x
-}
 
 export const convertTel = (e) => {
     let tel = e
@@ -156,22 +126,22 @@ export const searchOptions = (e) => {
                         preview={false}
                     />
                     <div>
-                    <span
-                        style={{
-                            marginLeft: 20,
-                            fontWeight: "bolder"
-                        }}
-                    >
-                        {load.description}
-                    </span><br/>
-                    <span
-                        style={{
-                            marginLeft: 20,
-                            fontSize: 11
-                        }}
-                    >
-                        {load.price}$ /{load.um}
-                    </span>
+                        <span
+                            style={{
+                                marginLeft: 20,
+                                fontWeight: "bolder"
+                            }}
+                        >
+                            {load.description}
+                        </span><br />
+                        <span
+                            style={{
+                                marginLeft: 20,
+                                fontSize: 11
+                            }}
+                        >
+                            {load.price}$ /{load.um}
+                        </span>
                     </div>
                 </div>
             ),
@@ -183,7 +153,7 @@ export const searchOptions = (e) => {
 }
 
 export const isHex = (num) => {
-  return Boolean(num.match(/^[0-9a-fA-F]{24}$/))
+    return Boolean(num.match(/^[0-9a-fA-F]{24}$/))
 }
 
 export function convertEditData(e) {

@@ -1,8 +1,12 @@
-import { Descriptions, Divider, Modal, Form, Row, Col, InputNumber, Button, Input, message } from 'antd'
+import { useMutation } from '@apollo/client'
+import { Descriptions, Divider, Modal, Form, Row, Col, InputNumber, Button, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { convertEditData } from '../../../functions/fn'
+import { msgTitle } from '../../../asset/data/msgTitle'
+import { convertEditData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
+import { UPDATE_SUB_PURCHASEORDER, VIEW_PURCHASEORDER_BY_ID } from '../../../graphql/purchaseOrder'
 
-export default function UpdateCart({ open, setOpen, selectData, cartData, setCartData }) {
+export default function UpdateViewSubOrder({ open, setOpen, selectData }) {
+    const [updateSubPurchaseOrders] = useMutation(UPDATE_SUB_PURCHASEORDER, mutationCallBackFn(VIEW_PURCHASEORDER_BY_ID, 'getSaleOrderById'))
 
     const [data, setData] = useState({})
 
@@ -11,21 +15,25 @@ export default function UpdateCart({ open, setOpen, selectData, cartData, setCar
     }, [selectData])
 
     const onFinish = (values) => {
-        let newArray = [...cartData]
-
-        let index = cartData?.findIndex(ele => ele.product === selectData.id)
-
-        if(values.qty > newArray[index].inStock){
-            message.error("មិនមានក្នុងស្តុក")
-        } else {
-            newArray[index].qty = values.qty
-            newArray[index].price = values.price
-            newArray[index].total = values.qty * values.price
-            newArray[index].remark = values.remark
-    
-            setCartData(newArray)
-            setOpen(false)
+        let newArray = {
+            orderId: selectData.orderId,
+            id: selectData.id,
+            ...values,
+            total: values.qty * values.price
         }
+
+        console.log(newArray)
+
+        updateSubPurchaseOrders({
+            variables: {
+                input: newArray
+            },
+            update(_,result){
+                console.log(result)
+                noticeAction("success", msgTitle.UPDATE)
+            }
+        })
+        setOpen(false)
     }
 
     const onFinishFailed = (err) => {
@@ -43,7 +51,6 @@ export default function UpdateCart({ open, setOpen, selectData, cartData, setCar
                 <Descriptions.Item label="បរិយាយ" span={3}>{data?.description}</Descriptions.Item>
                 <Descriptions.Item label="អត្ថលេខ" span={3}>{data?.id}</Descriptions.Item>
                 <Descriptions.Item label="តម្លៃ" span={3}>{data?.price}$ /{data?.um}</Descriptions.Item>
-                <Descriptions.Item label="ស្តុក" span={3}>{data?.inStock} {data?.um}</Descriptions.Item>
             </Descriptions>
             <Divider>ការកំណត់</Divider>
             <Form

@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { BellOutlined, MoreOutlined, PoweroffOutlined } from '@ant-design/icons';
+import React, { useContext, useEffect, useState } from 'react'
+import { BellOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
 import { Badge, Button, Col, Layout, Popconfirm, Popover, Row, List } from 'antd';
 import { useSubscription } from '@apollo/client';
 import { GET_NOTIFICATION } from '../graphql/notification';
 import moment from 'moment';
+import { auth } from '../api/config';
+import { DataController } from '../context/dataProvider';
+import { ACTION } from '../context/reducer';
+import { useHistory } from 'react-router-dom';
 
 const { Header } = Layout;
 const content = ({ data, newNum, setNewNum }) => {
@@ -45,7 +49,10 @@ const content = ({ data, newNum, setNewNum }) => {
     </div>
 }
 
-export default function Navheader({ collapsed, setCollapsed }) {
+export default function Navheader() {
+    let history = useHistory()
+    const { loginedDispatch, user } = useContext(DataController)
+
     const { data: NoticeDB } = useSubscription(GET_NOTIFICATION);
 
     const [newNum, setNewNum] = useState(0)
@@ -58,29 +65,34 @@ export default function Navheader({ collapsed, setCollapsed }) {
         }
     }, [NoticeDB])
 
+    const onSignOutFn = () => {
+        loginedDispatch({type: ACTION.ADD_PAYLOAD, payload: true})
+        auth.signOut().then(() => history.push("/"))
+    }
+
     return (
         <Header className="site-layout-background" style={{ padding: 0 }}>
             <Row>
                 <Col
                     xs={2}
+                    style={{
+                        paddingLeft: 20
+                    }}
                 >
-                    <Button
-                        type="link"
-                        onClick={() => setCollapsed(!collapsed)}
-                    >
-
-                        <MoreOutlined style={{
-                            fontWeight: "bolder"
-                        }} />
-                    </Button>
                     <Popover
                         content={content({ data, newNum, setNewNum })}
                         trigger="click"
                         placement="rightTop"
-                        // onClick={() => setNewNum(0)}
                     >
-                        <Badge count={newNum}>
-                            <BellOutlined />
+                        <Badge
+                            count={newNum}
+                            size="small"
+                        >
+                            <BellOutlined
+                                style={{
+                                    cursor: "pointer"
+                                }}
+                            />
                         </Badge>
                     </Popover>
                 </Col>
@@ -91,18 +103,30 @@ export default function Navheader({ collapsed, setCollapsed }) {
                         paddingRight: 40
                     }}
                 >
+                    <Button
+                        type="link"
+                    >
+                        <SettingOutlined
+                                style={{
+                                    cursor: "pointer"
+                                }}
+                            />
+                    </Button>
                     <Popconfirm
                         placement="leftTop"
                         title="តើអ្នកចង់ចាក់ចេញមែនទេ?"
                         okType="danger"
                         okText="ចង់"
                         cancelText="មិនចង់"
+                        onConfirm={() => {
+                            onSignOutFn()
+                        }}
                     >
                         <Button
                             danger
                             shape="round"
                         >
-                            Sambath <PoweroffOutlined />
+                            {user.displayName} <PoweroffOutlined />
                         </Button>
                     </Popconfirm>
                 </Col>

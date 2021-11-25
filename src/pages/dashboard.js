@@ -6,11 +6,17 @@ export default function Dashboard() {
   return (
     <Row gutter={6}>
       <Col
+        xs={24}
         md={18}
       >
-        <Row gutter={10}>
+
+      </Col>
+      <Col
+        md={6}
+      >
+        <Row gutter={[10, 10]}>
           <Col
-            xs={4}
+            xs={24}
           >
             <Button
               type="dashed"
@@ -23,7 +29,7 @@ export default function Dashboard() {
             </Button>
           </Col>
           <Col
-            xs={4}
+            xs={24}
           >
             <Button
               type="dashed"
@@ -40,14 +46,9 @@ export default function Dashboard() {
           <Col
             xs={24}
           >
-            
+
           </Col>
         </Row>
-      </Col>
-      <Col
-        md={6}
-      >
-
       </Col>
     </Row>
   )

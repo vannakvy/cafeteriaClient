@@ -1,6 +1,6 @@
 import { PlusCircleOutlined, PushpinOutlined, SearchOutlined } from '@ant-design/icons'
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { AutoComplete, Button, Col, Divider, Empty, Image, Input, Pagination, Row, Typography, Table, Descriptions, Timeline, InputNumber } from 'antd'
+import { AutoComplete, Button, Col, Divider, Empty, Image, Input, Pagination, Row, Typography, Table, Descriptions, Timeline, InputNumber, message } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { msgTitle } from '../../asset/data/msgTitle'
@@ -152,49 +152,58 @@ export default function AddSaleOrder() {
     const pushToCart = (e) => {
         let findData = ProductSearchDb?.getProducts?.data.find(ele => ele.id === e)
 
-        let newArray = [...cartData]
-        let index = cartData?.findIndex(ele => ele.product === findData.id)
-
-        if (index === -1) {
-            newArray.push({
-                ...findData,
-                product: findData?.id,
-                qty: 1,
-                price: findData.price,
-                total: 1 * findData.price,
-                remark: ""
-            })
+        if (findData.inStock <= 0) {
+            message.error("មិនមានក្នុងស្តុក")
         } else {
-            newArray[index].qty = newArray[index].qty + 1
-            newArray[index].price = findData.price
-            newArray[index].total = (newArray[index].qty) * findData.price
+            let newArray = [...cartData]
+            let index = cartData?.findIndex(ele => ele.product === findData.id)
+    
+            if (index === -1) {
+                newArray.push({
+                    ...findData,
+                    product: findData?.id,
+                    qty: 1,
+                    price: findData.price,
+                    total: 1 * findData.price,
+                    remark: ""
+                })
+            } else {
+                newArray[index].qty = newArray[index].qty + 1
+                newArray[index].price = findData.price
+                newArray[index].total = (newArray[index].qty) * findData.price
+            }
+    
+            setCartData(newArray)
+            setSearchKeyword("")
         }
-
-        setCartData(newArray)
-        setSearchKeyword("")
     }
 
 
     const onSelectCard = (value) => {
-        let newArray = [...cartData]
-        let index = cartData?.findIndex(ele => ele.product === value.id)
 
-        if (index === -1) {
-            newArray.push({
-                ...value,
-                product: value?.id,
-                qty: 1,
-                price: value.price,
-                total: 1 * value.price,
-                remark: ""
-            })
+        if (value.inStock <= 0) {
+            message.error("មិនមានក្នុងស្តុក")
         } else {
-            newArray[index].qty = newArray[index].qty + 1
-            newArray[index].price = value.price
-            newArray[index].total = (newArray[index].qty) * value.price
-        }
+            let newArray = [...cartData]
+            let index = cartData?.findIndex(ele => ele.product === value.id)
 
-        setCartData(newArray)
+            if (index === -1) {
+                newArray.push({
+                    ...value,
+                    product: value?.id,
+                    qty: 1,
+                    price: value.price,
+                    total: 1 * value.price,
+                    remark: ""
+                })
+            } else {
+                newArray[index].qty = newArray[index].qty + 1
+                newArray[index].price = value.price
+                newArray[index].total = (newArray[index].qty) * value.price
+            }
+
+            setCartData(newArray)
+        }
 
     };
 
@@ -419,10 +428,15 @@ export default function AddSaleOrder() {
                                                             </Typography.Title>
                                                             <Typography.Text mark>
                                                                 តម្លៃ៖ {load.price}$ /{load.um}
-                                                            </Typography.Text><br />
+                                                            </Typography.Text>
+                                                            <br />
+                                                            <Typography.Text ellipsis={true}>
+                                                                ស្តុក៖ {load.inStock}
+                                                            </Typography.Text>
+                                                            {/* <br />
                                                             <Typography.Text ellipsis={true}>
                                                                 {load.id}
-                                                            </Typography.Text>
+                                                            </Typography.Text> */}
                                                         </div>
                                                     </Col>
                                                 ))
