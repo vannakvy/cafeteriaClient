@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { Button, Modal } from 'antd'
 import ReactToPrint from 'react-to-print';
 import PrintComponent from '../comp/printComponent';
+import { theme } from '../../../static/theme';
 
 export default function PrintSaleOrder({ open, data, clearDataFn }) {
     const componentRef = useRef()
@@ -17,6 +18,7 @@ export default function PrintSaleOrder({ open, data, clearDataFn }) {
                     danger
                     key="cancel"
                     href="/saleorder"
+                    size={theme.btnSize}
                 >
                     ចាក់ចេញ
                 </Button>,
@@ -26,6 +28,7 @@ export default function PrintSaleOrder({ open, data, clearDataFn }) {
                         // to the root node of the returned component as it will be overwritten.
                         return <Button
                             type="default"
+                            size={theme.btnSize}
                         >
                             បោះពុម្ភ
                         </Button>;

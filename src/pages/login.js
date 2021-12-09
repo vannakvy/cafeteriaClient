@@ -29,7 +29,7 @@ export default function Login() {
 
                 console.log(errorCode, errorMessage)
                 
-                noticeAction("success", errorMessage)
+                noticeAction("error", "គណនីរបស់អ្នកមិនត្រឹមត្រូវនោះទេ!")
                 
                 // noticeAction("success", msgTitle.CREATE)
             });

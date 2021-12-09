@@ -95,7 +95,7 @@ export const CartCol = ({ onUpdateFn, onDeleteFn }) => {
             title: () => <MoreOutlined />,
             dataIndex: 'more',
             key: 'more',
-            width: 100,
+            width: 120,
             fixed: 'right',
             align: "center",
             render: (value, row, index) => {

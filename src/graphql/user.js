@@ -41,16 +41,25 @@ export const GET_USER_CONTENT_BY_UID = gql`
                 token
                 displayName
                 email
+                contentRole {
+                    content {
+                        path
+                    }
+                    view
+                    create
+                    update
+                    delete
+                }
             }
             content {
                 _id
                 title
                 path
                 contentId
-                view
-                create
-                update
-                delete
+                # view
+                # create
+                # update
+                # delete
                 sub
                 menu
             }

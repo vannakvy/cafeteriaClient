@@ -100,3 +100,41 @@ code {
   width: 200px !important;
   height: 200px !important;
 }
+
+.ant-menu-inline.ant-menu-root .ant-menu-item, .ant-menu-inline.ant-menu-root .ant-menu-submenu-title{
+  padding: 25px 20px !important;
+}
+
+.ant-select-item-option{
+  margin: 15px !important;
+  line-height: 1.5;
+}
+
+.ant-layout-sider-light {
+  background-image: url("../asset/img/BG.png") !important;
+  background-repeat: no-repeat;
+  /* background-position: center; */
+  background-size: 1700px 900px !important;
+}
+
+.site-layout .site-layout-background{
+  background-image: url("../asset/img/BG.png") !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* background-size: cover; */
+  background-size: 1700px 900px !important;
+}
+
+.ant-menu-root.ant-menu-vertical, .ant-menu-root.ant-menu-vertical-left, .ant-menu-root.ant-menu-vertical-right, .ant-menu-root.ant-menu-inline{
+  background-color: transparent !important;
+}
+
+.ant-list-item{
+  padding: 11px 0px 1px 0px !important;
+  /* line-height: 5px !important; */
+}
+
+.ant-scroll-number{
+  padding: 1px 5px 10px 5px !important;
+  border-radius: 100px !important;
+}

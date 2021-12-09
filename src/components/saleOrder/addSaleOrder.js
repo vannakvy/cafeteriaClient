@@ -1,12 +1,14 @@
 import { PlusCircleOutlined, PushpinOutlined, SearchOutlined } from '@ant-design/icons'
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { AutoComplete, Button, Col, Divider, Empty, Image, Input, Pagination, Row, Typography, Table, Descriptions, Timeline, InputNumber, message } from 'antd'
+import { AutoComplete, Button, Col, Divider, Empty, Image, Input, Pagination, Row, Typography, Table, Descriptions, Timeline, InputNumber, message, Checkbox } from 'antd'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { msgTitle } from '../../asset/data/msgTitle'
-import { convertProduct, isHex, noticeAction, searchOptions } from '../../functions/fn'
-import { GET_ALL_CATEGORY, GET_PRODUCT_BY_CTG, GET_ALL_PRODUCT } from '../../graphql/product'
+import { generalCustomer } from '../../context/initialState'
+import { convertProduct, noticeAction, searchOptions } from '../../functions/fn'
+import { GET_ALL_CATEGORY, GET_PRODUCT_BY_CTG, GET_ALL_PRODUCT, GET_PRODUCT_BY_ID } from '../../graphql/product'
 import { ADD_SALEORDER } from '../../graphql/saleOrder'
+import { theme } from '../../static/theme'
 import AddCustomerToSale from './modal/addCustomerToSale'
 import AddDeliverToSale from './modal/addDeliverToSale'
 import AddLocationToSale from './modal/addLocationToSale'
@@ -28,6 +30,8 @@ export default function AddSaleOrder() {
         },
     })
 
+    // console.log(ProductSearchDb)
+
     const [getProductBySelectCTG, { data: ProductDb }] = useLazyQuery(GET_PRODUCT_BY_CTG, {
         onError: (err) => {
             noticeAction("error", err?.graphQLErrors[0]?.message + '')
@@ -38,6 +42,12 @@ export default function AddSaleOrder() {
         onError: (err) => {
             noticeAction("error", err?.graphQLErrors[0]?.message + '')
         }
+    })
+
+    const [getProductById] = useMutation(GET_PRODUCT_BY_ID, {
+        onError: (err) => {
+            noticeAction("error", err?.graphQLErrors[0]?.message + '')
+        },
     })
 
     const [cartData, setCartData] = useState([])
@@ -75,6 +85,8 @@ export default function AddSaleOrder() {
     const [openAddDeliver, setOpenAddDeliver] = useState(false)
     const [openPrint, setOpenPrint] = useState(false)
 
+    const [generalGuest, setGeneralGuest] = useState(false)
+
     const [searchKeyword, setSearchKeyword] = useState("")
     const [current, setCurrent] = useState(1)
     const [limit, setLimit] = useState(8)
@@ -85,7 +97,15 @@ export default function AddSaleOrder() {
                 input: {
                     current: 1,
                     limit: 5,
-                    keyword: searchKeyword
+                    keyword: searchKeyword,
+                    sort: {
+                        name: "",
+                        value: "",
+                    },
+                    filter: {
+                        name: "",
+                        value: "",
+                    }
                 }
             }
         })
@@ -124,26 +144,64 @@ export default function AddSaleOrder() {
 
     const selectCategoryFn = (e) => {
         setActiveCategory(e.id)
-        // getProductBySelectCTG({
-        //     variables: {
-        //         input: {
-        //             id: e.id,
-        //             current: current,
-        //             limit: limit,
-        //         }
-        //     },
-        // })
     }
 
     const handleSearch = (value) => {
         setSearchKeyword(value)
 
-        if (isHex(value)) {
-            pushToCart(value)
-            setSearchKeyword("")
-        }
+        // if (isHex(value)) {
+        //     new Promise(resolve => {
+        //         resolve(setSearchKeyword(value))
+        //     }).then(() => {
+        //         pushToCart(value)
+        //         setSearchKeyword("")
+        //     })
+        // }
     };
 
+    const handleSearchEnter = async (e) => {
+        if (e.key === 'Enter') {
+            getProductById({
+                variables: {
+                    input: {
+                        id: e.target.value
+                    }
+                },
+                update(_, { data: productById }) {
+                    // console.log(productById.getProductById)
+                    let findProduct = productById.getProductById
+                    if (findProduct?.inStock <= 0 || findProduct?.inStock === undefined) {
+                        message.error("មិនមានក្នុងស្តុក")
+                    } else {
+                        let newArray = [...cartData]
+                        let index = cartData?.findIndex(ele => ele.product === findProduct.id)
+
+                        if (newArray[index]?.qty >= findProduct?.inStock) {
+                            message.error("មិនមានក្នុងស្តុក")
+                        } else {
+                            if (index === -1) {
+                                newArray.push({
+                                    ...findProduct,
+                                    product: findProduct?.id,
+                                    qty: 1,
+                                    price: findProduct.price,
+                                    total: 1 * findProduct.price,
+                                    remark: ""
+                                })
+                            } else {
+                                newArray[index].qty = newArray[index].qty + 1
+                                newArray[index].price = findProduct.price
+                                newArray[index].total = (newArray[index].qty) * findProduct.price
+                            }
+
+                            setCartData(newArray)
+                        }
+                    }
+                    setSearchKeyword("")
+                }
+            })
+        }
+    }
 
     const onSelect = (value) => {
         pushToCart(value)
@@ -151,33 +209,37 @@ export default function AddSaleOrder() {
 
     const pushToCart = (e) => {
         let findData = ProductSearchDb?.getProducts?.data.find(ele => ele.id === e)
+        console.log(ProductSearchDb?.getProducts?.data)
 
-        if (findData.inStock <= 0) {
+        if (findData?.inStock <= 0 || findData?.inStock === undefined) {
             message.error("មិនមានក្នុងស្តុក")
         } else {
             let newArray = [...cartData]
             let index = cartData?.findIndex(ele => ele.product === findData.id)
-    
-            if (index === -1) {
-                newArray.push({
-                    ...findData,
-                    product: findData?.id,
-                    qty: 1,
-                    price: findData.price,
-                    total: 1 * findData.price,
-                    remark: ""
-                })
+
+            if (newArray[index]?.qty >= findData?.inStock) {
+                message.error("មិនមានក្នុងស្តុក")
             } else {
-                newArray[index].qty = newArray[index].qty + 1
-                newArray[index].price = findData.price
-                newArray[index].total = (newArray[index].qty) * findData.price
+                if (index === -1) {
+                    newArray.push({
+                        ...findData,
+                        product: findData?.id,
+                        qty: 1,
+                        price: findData.price,
+                        total: 1 * findData.price,
+                        remark: ""
+                    })
+                } else {
+                    newArray[index].qty = newArray[index].qty + 1
+                    newArray[index].price = findData.price
+                    newArray[index].total = (newArray[index].qty) * findData.price
+                }
             }
-    
+
             setCartData(newArray)
             setSearchKeyword("")
         }
     }
-
 
     const onSelectCard = (value) => {
 
@@ -207,7 +269,6 @@ export default function AddSaleOrder() {
 
     };
 
-
     const onShowSizeChange = (current, pageSize) => {
         setCurrent(current)
         setLimit(pageSize)
@@ -234,7 +295,7 @@ export default function AddSaleOrder() {
     }
 
     const onSubmitFn = () => {
-        let newArray = {
+        let headerData = {
             customer: {
                 id: customerData?.customer,
                 tel: customerData?.tel,
@@ -251,6 +312,26 @@ export default function AddSaleOrder() {
                 }
             },
             date: customerData?.date,
+        }
+
+        let newArray = generalGuest ? {
+            ...generalCustomer,
+            products: convertProduct(cartData),
+            subTotal: totalBL?.subTotal,
+            tax: totalBL?.tax,
+            offer: totalBL?.offer,
+            delivery: totalBL?.delivery,
+            grandTotal: totalBL?.grandTotal,
+            payment: totalBL?.payment,
+            status: {
+                isPrepared: true,
+                isCooked: true,
+                isDelivered: true,
+                isPaid: totalBL.noPaid === 0 ? true : false,
+                isCanceled: false
+            }
+        } : {
+            ...headerData,
             products: convertProduct(cartData),
             subTotal: totalBL?.subTotal,
             tax: totalBL?.tax,
@@ -267,17 +348,12 @@ export default function AddSaleOrder() {
             }
         }
 
-        // console.log(newArray)
-
         setSaleOrders({
             variables: {
                 input: newArray
             },
             update(_, result) {
-                // console.log(result)
                 noticeAction("success", msgTitle.CREATE)
-                // history.push("/saleorder")
-                // history.goBack()
                 setPrintData(result?.data?.setSaleOrders)
                 setOpenPrint(true)
             }
@@ -337,6 +413,7 @@ export default function AddSaleOrder() {
                                         options={searchOptions(ProductSearchDb?.getProducts?.data)}
                                         onSelect={onSelect}
                                         onSearch={handleSearch}
+                                        onInputKeyDown={handleSearchEnter}
                                         value={searchKeyword}
                                     >
                                         <Input
@@ -351,42 +428,50 @@ export default function AddSaleOrder() {
                                     <Divider orientation="left">ប្រភេទទំនិញ៖</Divider>
                                 </Col>
                                 <Col
-                                    xs={12}
-                                    md={6}
-                                    key={"all"}
+                                    xs={24}
                                 >
-                                    <Button
-                                        type={activeCategory === "all" ? "primary" : "dashed"}
-                                        style={{
-                                            width: "100%"
-                                        }}
-                                        onClick={() => selectCategoryFn({
-                                            id: "all"
-                                        })}
-                                    >
-                                        ទាំងអស់
-                                    </Button>
-                                </Col>
-
-                                {
-                                    CategoryDb?.getCategories?.data?.map(load => (
+                                    <Row gutter={[10, 10]}>
                                         <Col
                                             xs={12}
-                                            md={6}
-                                            key={load.id}
+                                            md={8}
+                                            key={"all"}
                                         >
                                             <Button
-                                                type={activeCategory === load.id ? "primary" : "dashed"}
+                                                type={activeCategory === "all" ? "primary" : "dashed"}
+                                                size={theme.btnSize}
                                                 style={{
                                                     width: "100%"
                                                 }}
-                                                onClick={() => selectCategoryFn(load)}
+                                                onClick={() => selectCategoryFn({
+                                                    id: "all"
+                                                })}
                                             >
-                                                {load.description}
+                                                ទាំងអស់
                                             </Button>
                                         </Col>
-                                    ))
-                                }
+
+                                        {
+                                            CategoryDb?.getCategories?.data?.map(load => (
+                                                <Col
+                                                    xs={12}
+                                                    md={8}
+                                                    key={load.id}
+                                                >
+                                                    <Button
+                                                        type={activeCategory === load.id ? "primary" : "dashed"}
+                                                        size={theme.btnSize}
+                                                        style={{
+                                                            width: "100%"
+                                                        }}
+                                                        onClick={() => selectCategoryFn(load)}
+                                                    >
+                                                        {load.description}
+                                                    </Button>
+                                                </Col>
+                                            ))
+                                        }
+                                    </Row>
+                                </Col>
                                 <Col
                                     xs={24}
                                     style={{
@@ -490,7 +575,7 @@ export default function AddSaleOrder() {
                             scroll={{ x: 500, y: 200 }}
                             rowKey={record => record.product}
                             pagination={false}
-                            size="small"
+                            size={theme.tableSize}
                         />
                         <div
                             style={{
@@ -749,13 +834,27 @@ export default function AddSaleOrder() {
                                         {totalBL.noPaid}$
                                     </Descriptions.Item>
                                 </Descriptions>
+
+                                <div
+                                    style={{
+                                        padding: "20px 0px 0px 0px"
+                                    }}
+                                >
+                                    <Checkbox
+                                        disabled={cartData.length !== 0 ? false : true}
+                                        onChange={e => setGeneralGuest(e.target.checked)}
+                                    >
+                                        អតិថិជនទូទៅ
+                                    </Checkbox>
+                                </div>
                                 <Button
                                     type="primary"
                                     style={{
                                         marginTop: 20,
                                         width: "100%"
                                     }}
-                                    disabled={customerData?.lname && deliverData?.lname && cartData.length !== 0 ? false : true}
+                                    size={theme.btnSize}
+                                    disabled={generalGuest ? false : customerData?.lname && deliverData?.lname && cartData.length !== 0 ? false : true}
                                     onClick={() => onSubmitFn()}
                                 >
                                     បង្កើត

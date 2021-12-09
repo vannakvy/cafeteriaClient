@@ -140,7 +140,7 @@ export const searchOptions = (e) => {
                                 fontSize: 11
                             }}
                         >
-                            {load.price}$ /{load.um}
+                            {load.cost}$ /{load.um}
                         </span>
                     </div>
                 </div>
@@ -182,4 +182,70 @@ export const convertProduct = (e) => {
     }))
 
     return newArray
+}
+
+export const BarName = () => {
+    let array = []
+
+    for (var i = 1; i <= 31; i++) {
+        array.push(i.toString())
+    }
+
+    return array
+}
+
+export const addDateForBarChart = (e) => {
+    if (e) {
+        let array = [...e]
+        let newArray = []
+        let result = []
+
+        for (var i = 1; i <= 31; i++) {
+            newArray.push({
+                __typename: 'DataRecord',
+                date: i,
+                count: 0,
+                total: 0
+            })
+        }
+
+        newArray.map(load => {
+            const index = array.findIndex(ele => ele.date === load.date)
+
+            if (index === -1) {
+                result.push(load.total)
+            } else {
+                result.push(array[index].total)
+            }
+
+            return null
+        })
+
+        return result
+    }
+}
+
+export const addMonthForBarChart = (e) => {
+    if (e) {
+        let array = [...e]
+        let expense = []
+        let income = []
+
+        for (let i = 1; i <= 12; i++) {
+            let index = array.findIndex(ele => ele.month === i)
+
+            if (index !== -1) {
+                expense.push(array[index].expense)
+                income.push(array[index].income)
+            } else {
+                expense.push(0)
+                income.push(0)
+            }
+        }
+
+        return {
+            expense,
+            income
+        }
+    }
 }

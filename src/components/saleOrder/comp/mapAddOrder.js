@@ -31,7 +31,13 @@ export default function MapAddOrder({ data, setData }) {
             onBoundsChanged={centerMoved}
         >
 
-
+            {/* <Marker
+                key="customer"
+                position={{
+                    lat: data.lat,
+                    lng: data.long
+                }}
+            /> */}
         </GoogleMap>
     ) : <></>
 }

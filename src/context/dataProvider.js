@@ -10,6 +10,8 @@ import { ACTION, reducer } from './reducer'
 export const DataController = createContext()
 
 export default function DataProvider({ children }) {
+    const [urlPath, urlPathDispatch] = useReducer(reducer, initState.urlPath)
+
     const [user, setUser] = useState({})
     const [logined, loginedDispatch] = useReducer(reducer, initState.logined)
 
@@ -43,7 +45,7 @@ export default function DataProvider({ children }) {
         });
     }, [getContentById])
 
-    console.log(content)
+    // console.log(content)
 
     useEffect(() => {
         setTimeout(() => {
@@ -56,7 +58,8 @@ export default function DataProvider({ children }) {
             value={{
                 content,
                 logined, loginedDispatch,
-                user
+                user,
+                urlPath, urlPathDispatch
             }}
         >
             {children}

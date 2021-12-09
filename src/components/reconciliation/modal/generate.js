@@ -1,17 +1,14 @@
 import { useMutation } from '@apollo/client'
 import { Col, Modal, Row, Form, Input, Button, DatePicker } from 'antd'
 import React from 'react'
-import { noticeAction } from '../../../functions/fn'
-import { CREATE_GENERATE_INVENTORY } from '../../../graphql/reconciliation'
+import { mutationCallBackFn, noticeAction } from '../../../functions/fn'
+import { CREATE_GENERATE_INVENTORY, GET_ALL_RECON } from '../../../graphql/reconciliation'
+import { theme } from '../../../static/theme'
 
 export default function Generate({ open, setOpen }) {
     let [form] = Form.useForm()
 
-    const [generateInventory] = useMutation(CREATE_GENERATE_INVENTORY, {
-        onError: (err) => {
-            noticeAction("error", err?.graphQLErrors[0]?.message + '')
-        },
-    })
+    const [generateInventory] = useMutation(CREATE_GENERATE_INVENTORY, mutationCallBackFn(GET_ALL_RECON, 'getInventory'))
 
     const onFinish = (values) => {
         generateInventory({
@@ -58,6 +55,7 @@ export default function Generate({ open, setOpen }) {
                                     width: "100%"
                                 }}
                                 placeholder="Date"
+                                // picker="month"
                             />
                         </Form.Item>
                     </Col>
@@ -82,6 +80,7 @@ export default function Generate({ open, setOpen }) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

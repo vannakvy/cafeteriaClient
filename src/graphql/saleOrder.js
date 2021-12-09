@@ -14,6 +14,7 @@ export const GET_ALL_SALEORDER = gql`
                     geolocation {
                         lat
                         long
+                        placename
                     }
                     remark
                 }
@@ -60,6 +61,7 @@ export const SUB_ALL_SALEORDER = gql`
                 geolocation {
                     lat
                     long
+                    placename
                 }
                 remark
             }
@@ -101,6 +103,7 @@ export const ADD_SALEORDER = gql`
                 geolocation {
                     lat
                     long
+                    placename
                 }
                 remark
             }
@@ -139,6 +142,7 @@ export const VIEW_SALEORDER_BY_ID = gql`
                 geolocation {
                     lat
                     long
+                    placename
                 }
                 remark
             }

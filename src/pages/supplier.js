@@ -6,6 +6,7 @@ import { Table } from 'antd'
 import { SupplierCol } from '../components/supplier/tableCol/supplierCol'
 import AddUpdateSupplier from '../components/supplier/drawer/addUpdateSupplier'
 import ViewSupplier from '../components/supplier/modal/viewSupplier'
+import { theme } from '../static/theme'
 
 export default function Supplier() {
     const [getSuppliers, { data: SupplierDb, loading }] = useLazyQuery(GET_ALL_SUPPLIER, {
@@ -74,7 +75,7 @@ export default function Supplier() {
             <ViewSupplier open={openView} setOpen={setOpenView} data={viewData} />
             <Table
                 {...loading}
-                size="small"
+                size={theme.tableSize}
                 bordered
                 columns={SupplierCol({ current, limit, setKeyword, onViewFn, onAddFn, onUpdateFn, onDeleteFn })}
                 dataSource={SupplierDb?.getSuppliers?.data}

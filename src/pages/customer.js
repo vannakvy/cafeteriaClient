@@ -6,6 +6,7 @@ import ViewCustomer from '../components/customer/modal/viewCustomer'
 import { CustomerCol } from '../components/customer/tableCol/customerCol'
 import { mutationCallBackFn, noticeAction } from '../functions/fn'
 import { DELETE_CUSTOMER, GET_ALL_CUSTOMER } from '../graphql/customer'
+import { theme } from '../static/theme'
 
 export default function Customer() {
     const [getCustomers, { data: CustomerDb, loading }] = useLazyQuery(GET_ALL_CUSTOMER, {
@@ -74,7 +75,7 @@ export default function Customer() {
             <ViewCustomer open={openView} setOpen={setOpenView} data={viewData} />
             <Table
                 {...loading}
-                size="small"
+                size={theme.tableSize}
                 bordered
                 columns={CustomerCol({ current, limit, setKeyword, onViewFn, onAddFn, onUpdateFn, onDeleteFn })}
                 dataSource={CustomerDb?.getCustomers?.data}

@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import StyleProvider from './context/styleProvider';
 import { Layout } from 'antd';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import NavBar from './routes/navbar';
 import Navheader from './routes/navheader';
 import { DataController } from './context/dataProvider';
@@ -14,12 +14,11 @@ import { contentRouter } from './functions/routeFn';
 import Error404 from './pages/404';
 import Login from './pages/login';
 import Loading from './components/login/loading';
-import { ACTION } from './context/reducer';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content } = Layout;
 
 function App() {
-  const { content, user, logined, loginedDispatch } = useContext(DataController)
+  const { content, user, logined } = useContext(DataController)
   const [collapsed, setCollapsed] = useState(false)
 
   return (

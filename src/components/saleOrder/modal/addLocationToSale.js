@@ -2,6 +2,7 @@ import { Col, Image, Modal, Row, Form, InputNumber, Button, Input } from 'antd'
 import React, { useState } from 'react'
 import pin from '../../../asset/img/pinRed.png'
 import { convertEditData } from '../../../functions/fn';
+import { theme } from '../../../static/theme';
 import MapAddOrder from '../comp/mapAddOrder';
 
 export default function AddLocationToSale({ open, setOpen, data, setData }) {
@@ -42,8 +43,8 @@ export default function AddLocationToSale({ open, setOpen, data, setData }) {
                     key="pin"
                     style={{
                         position: 'absolute',
-                        top: "39.2%",
-                        left: "49.2%",
+                        top: "29.2%",
+                        left: "47.2%",
                     }}
                 >
                     <Image
@@ -83,6 +84,7 @@ export default function AddLocationToSale({ open, setOpen, data, setData }) {
                                     ...ele,
                                     lat: e
                                 }))}
+                                size={theme.inputSize}
                             />
                         </Form.Item>
                     </Col>
@@ -102,6 +104,7 @@ export default function AddLocationToSale({ open, setOpen, data, setData }) {
                                     ...ele,
                                     long: e
                                 }))}
+                                size={theme.inputSize}
                             />
                         </Form.Item>
                     </Col>
@@ -111,7 +114,7 @@ export default function AddLocationToSale({ open, setOpen, data, setData }) {
                         <Form.Item
                             label="ឈ្មោះទីតាំង"
                             name="placename"
-                            // rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!' }]}
+                            rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!' }]}
                         >
                             <Input placeholder="Placename" />
                         </Form.Item>
@@ -126,6 +129,7 @@ export default function AddLocationToSale({ open, setOpen, data, setData }) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

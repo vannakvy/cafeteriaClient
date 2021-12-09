@@ -4,6 +4,7 @@
 
 h1, h2, h3, h4, h5, h6, p, span, input, li, th, td, button, div, label, title {
   font-family: khmerOsSiemReap;
+  font-size: 18px !important;
 }
 
 .go-headerFont{
@@ -99,4 +100,51 @@ h1, h2, h3, h4, h5, h6, p, span, input, li, th, td, button, div, label, title {
 
 .go-generateBtn:hover {
   box-shadow: 2px 2px 10px #ffaeae;
+}
+
+.go-dashboardBtn{
+  padding: 30px 40px 20px 40px;
+  box-shadow: 1px 1px 5px #e5e5e5;
+  display: flex;
+  border-radius: 5px;
+  justify-content: center;
+  align-items:center;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.go-dashboardBtn:hover {
+  box-shadow: 2px 2px 10px #AEEAFF;
+}
+
+.go-TopTitle{
+  padding: 20px 40px;
+  box-shadow: 1px 1px 5px #e5e5e5;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.go-TopTitle:hover {
+  box-shadow: 2px 2px 10px #AEEAFF;
+}
+
+.go-DashboardBox{
+  font-size: 14pt !important;
+}
+
+.go-DashboardBox1{
+  font-size: 24pt !important;
+}
+
+.go-DashboardBox2{
+  font-size: 9pt !important;
+}
+
+.go-DashboardBox3{
+  font-size: 14pt !important;
+}
+
+.go-PieTitle{
+  font-size: 18pt !important;
 }

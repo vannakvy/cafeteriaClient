@@ -6,6 +6,7 @@ import { useLazyQuery, useMutation } from '@apollo/client'
 import { UserCol } from '../components/user/tableCols/userCol'
 import AddUpdateUser from '../components/user/modal/addUpdateUser'
 import ConfigContent from '../components/user/modal/configContent'
+import { theme } from '../static/theme'
 
 export default function User() {
 
@@ -80,7 +81,7 @@ export default function User() {
             <ConfigContent open={openConfigContent} setOpen={setOpenConfigContent} data={configCSelected} />
             <Table
                 {...loading}
-                size="small"
+                size={theme.tableSize}
                 bordered
                 columns={UserCol({ current, limit, setKeyword, onConfigFn, onAddFn, onUpdateFn, onDeleteFn })}
                 dataSource={UsersDb?.getUsers?.data}

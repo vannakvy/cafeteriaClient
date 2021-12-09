@@ -5,6 +5,7 @@ import { msgTitle } from '../../../asset/data/msgTitle';
 import pin from '../../../asset/img/pinRed.png'
 import { convertEditData, mutationCallBackFn, noticeAction } from '../../../functions/fn';
 import { UPDATE_SALEORDER, VIEW_SALEORDER_BY_ID } from '../../../graphql/saleOrder';
+import { theme } from '../../../static/theme';
 import MapAddOrder from '../comp/mapAddOrder';
 
 export default function UpdateLocation({ open, setOpen, data }) {
@@ -62,8 +63,8 @@ export default function UpdateLocation({ open, setOpen, data }) {
                     key="pin"
                     style={{
                         position: 'absolute',
-                        top: "39.2%",
-                        left: "49.2%",
+                        top: "29.2%",
+                        left: "47.2%",
                     }}
                 >
                     <Image
@@ -103,6 +104,7 @@ export default function UpdateLocation({ open, setOpen, data }) {
                                     ...ele,
                                     lat: e
                                 }))}
+                                size={theme.inputSize}
                             />
                         </Form.Item>
                     </Col>
@@ -122,6 +124,7 @@ export default function UpdateLocation({ open, setOpen, data }) {
                                     ...ele,
                                     long: e
                                 }))}
+                                size={theme.inputSize}
                             />
                         </Form.Item>
                     </Col>
@@ -131,7 +134,7 @@ export default function UpdateLocation({ open, setOpen, data }) {
                         <Form.Item
                             label="ឈ្មោះទីតាំង"
                             name="placename"
-                            // rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!' }]}
+                            rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!' }]}
                         >
                             <Input placeholder="Placename" />
                         </Form.Item>
@@ -146,6 +149,7 @@ export default function UpdateLocation({ open, setOpen, data }) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

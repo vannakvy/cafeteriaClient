@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { msgTitle } from '../asset/data/msgTitle'
 import { DELETE_PURCHASEORDER, GET_ALL_PURCHASEORDER, SUB_ALL_PURCHASEORDER } from '../graphql/purchaseOrder'
 import { PurchaseOrderCol } from '../components/purchaseOrder/tableCols/purchaseCol'
+import { theme } from '../static/theme'
 
 export default function PurchaseOrder() {
     let history = useHistory()
@@ -83,7 +84,7 @@ export default function PurchaseOrder() {
             <SetStatusOrder open={openStatus} setOpen={setOpenStatus} updateData={updateData} />
             <Table
                 {...loading}
-                size="small"
+                size={theme.tableSize}
                 bordered
                 columns={PurchaseOrderCol({ current, limit, setKeyword, onSetStatusFn, onAddFn, onDeleteFn })}
                 dataSource={PurchaseOrderDb?.getPurchaseOrders?.data}

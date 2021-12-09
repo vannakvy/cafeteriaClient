@@ -3,6 +3,7 @@ import { Col, Drawer, Input, Row, Form, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { convertTel, convertUpdateData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { ADD_SUPPLIER, GET_ALL_SUPPLIER, UPDATE_SUPPLIER } from '../../../graphql/supplier'
+import { theme } from '../../../static/theme'
 
 export default function AddUpdateSupplier({ open, setOpen, data, type }) {
     let [form] = Form.useForm()
@@ -153,6 +154,7 @@ export default function AddUpdateSupplier({ open, setOpen, data, type }) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ជូល
                             </Button>

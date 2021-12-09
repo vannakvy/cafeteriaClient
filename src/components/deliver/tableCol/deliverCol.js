@@ -1,5 +1,6 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons"
 import { Button, Input, Popconfirm, Space, Tooltip } from "antd"
+import { theme } from "../../../static/theme"
 
 export const DeliverCol = ({ current, limit, setKeyword, onViewFn, onAddFn, onUpdateFn, onDeleteFn }) => {
 
@@ -78,6 +79,7 @@ export const DeliverCol = ({ current, limit, setKeyword, onViewFn, onAddFn, onUp
                         width: "100%"
                     }}
                     onClick={() => onAddFn()}
+                    size={theme.btnSize}
                 >
                     បញ្ជូលថ្មី
                 </Button>

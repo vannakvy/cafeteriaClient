@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { msgTitle } from '../../../asset/data/msgTitle'
 import { convertUpdateData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { ADD_PRODUCT, GET_ALL_CATEGORY, GET_ALL_PRODUCT, UPDATE_PRODUCT } from '../../../graphql/product'
+import { theme } from '../../../static/theme'
 import UploadProfile from '../comp/uploadProfile'
 
 const { Option } = Select;
@@ -133,7 +134,7 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                 <Row gutter={6}>
                                     <Col
                                         xs={24}
-                                        md={12}
+                                        md={24}
                                     >
                                         <Form.Item
                                             label="បរិយាយ"
@@ -148,7 +149,26 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                         md={12}
                                     >
                                         <Form.Item
-                                            label="តម្លៃឯកតា"
+                                            label="តម្លៃដើម"
+                                            name="cost"
+                                            rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!', type: "number" }]}
+                                        >
+                                            <InputNumber
+                                                style={{
+                                                    width: "100%"
+                                                }}
+                                                size={theme.inputSize}
+                                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col
+                                        xs={24}
+                                        md={12}
+                                    >
+                                        <Form.Item
+                                            label="តម្លៃលក់"
                                             name="price"
                                             rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!', type: "number" }]}
                                         >
@@ -156,6 +176,7 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                                 style={{
                                                     width: "100%"
                                                 }}
+                                                size={theme.inputSize}
                                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                             />
@@ -188,16 +209,22 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                                 placeholder="Category"
                                                 optionFilterProp="children"
                                                 onSearch={onSearch}
+                                                size={theme.selectSize}
                                             >
                                                 {
                                                     CategoryDb?.getCategories?.data.map(load =>
-                                                        <Option key={load.id} value={load.id}>{load.description}</Option>
+                                                        <Option 
+                                                            key={load.id} 
+                                                            value={load.id}
+                                                        >
+                                                            {load.description}
+                                                        </Option>
                                                     )
                                                 }
                                             </Select>
                                         </Form.Item>
                                     </Col>
-                                    <Col
+                                    {/* <Col
                                         xs={24}
                                         md={24}
                                     >
@@ -210,9 +237,10 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                                 style={{
                                                     width: "100%"
                                                 }}
+                                                size={theme.inputSize}
                                             />
                                         </Form.Item>
-                                    </Col>
+                                    </Col> */}
                                     <Col
                                         xs={24}
                                         md={24}
@@ -224,6 +252,7 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                                 }}
                                                 type="primary"
                                                 htmlType="submit"
+                                                size={theme.btnSize}
                                             >
                                                 បញ្ចូលថ្មី
                                             </Button>
@@ -250,7 +279,7 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                             <Row gutter={6}>
                                 <Col
                                     xs={24}
-                                    md={12}
+                                    md={24}
                                 >
                                     <Form.Item
                                         label="បរិយាយ"
@@ -265,7 +294,26 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                     md={12}
                                 >
                                     <Form.Item
-                                        label="តម្លៃឯកតា"
+                                        label="តម្លៃដើម"
+                                        name="cost"
+                                        rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!', type: "number" }]}
+                                    >
+                                        <InputNumber
+                                            style={{
+                                                width: "100%"
+                                            }}
+                                            size={theme.inputSize}
+                                            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col
+                                    xs={24}
+                                    md={12}
+                                >
+                                    <Form.Item
+                                        label="តម្លៃលក់"
                                         name="price"
                                         rules={[{ required: true, message: 'សូមបញ្ជូលទិន្នន័យអោយបានត្រឹមត្រូវ!', type: "number" }]}
                                     >
@@ -273,6 +321,7 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                             style={{
                                                 width: "100%"
                                             }}
+                                            size={theme.inputSize}
                                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                         />
@@ -305,6 +354,7 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                             placeholder="Category"
                                             optionFilterProp="children"
                                             onSearch={onSearch}
+                                            size={theme.selectSize}
                                         >
                                             {
                                                 CategoryDb?.getCategories?.data.map(load =>
@@ -325,6 +375,7 @@ export default function AddEditProduct({ open, setOpen, type, updateData }) {
                                             }}
                                             type="primary"
                                             htmlType="submit"
+                                            size={theme.btnSize}
                                         >
                                             បញ្ចូលថ្មី
                                         </Button>

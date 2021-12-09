@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { BellOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
+import { BellOutlined, PoweroffOutlined } from '@ant-design/icons';
 import { Badge, Button, Col, Layout, Popconfirm, Popover, Row, List } from 'antd';
 import { useSubscription } from '@apollo/client';
 import { GET_NOTIFICATION } from '../graphql/notification';
@@ -7,7 +7,8 @@ import moment from 'moment';
 import { auth } from '../api/config';
 import { DataController } from '../context/dataProvider';
 import { ACTION } from '../context/reducer';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { theme } from '../static/theme';
 
 const { Header } = Layout;
 const content = ({ data, newNum, setNewNum }) => {
@@ -51,7 +52,8 @@ const content = ({ data, newNum, setNewNum }) => {
 
 export default function Navheader() {
     let history = useHistory()
-    const { loginedDispatch, user } = useContext(DataController)
+    let urlPath = useLocation().pathname
+    const { loginedDispatch, user, urlPathDispatch } = useContext(DataController)
 
     const { data: NoticeDB } = useSubscription(GET_NOTIFICATION);
 
@@ -64,6 +66,13 @@ export default function Navheader() {
             setData(e => [NoticeDB?.newNotice, ...e])
         }
     }, [NoticeDB])
+
+    useEffect(() => {
+        urlPathDispatch({
+            type: ACTION.ADD_PAYLOAD,
+            payload: urlPath
+        })
+    }, [urlPathDispatch, urlPath])
 
     const onSignOutFn = () => {
         loginedDispatch({type: ACTION.ADD_PAYLOAD, payload: true})
@@ -86,7 +95,7 @@ export default function Navheader() {
                     >
                         <Badge
                             count={newNum}
-                            size="small"
+                            size="default"
                         >
                             <BellOutlined
                                 style={{
@@ -103,7 +112,7 @@ export default function Navheader() {
                         paddingRight: 40
                     }}
                 >
-                    <Button
+                    {/* <Button
                         type="link"
                     >
                         <SettingOutlined
@@ -111,7 +120,7 @@ export default function Navheader() {
                                     cursor: "pointer"
                                 }}
                             />
-                    </Button>
+                    </Button> */}
                     <Popconfirm
                         placement="leftTop"
                         title="តើអ្នកចង់ចាក់ចេញមែនទេ?"
@@ -125,6 +134,7 @@ export default function Navheader() {
                         <Button
                             danger
                             shape="round"
+                            size={theme.btnSize}
                         >
                             {user.displayName} <PoweroffOutlined />
                         </Button>

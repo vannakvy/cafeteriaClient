@@ -1,6 +1,7 @@
 import { Descriptions, Divider, Modal, Form, Row, Col, InputNumber, Button, Input } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { convertEditData } from '../../../functions/fn'
+import { theme } from '../../../static/theme'
 
 export default function UpdateCart({ open, setOpen, selectData, cartData, setCartData }) {
 
@@ -66,6 +67,7 @@ export default function UpdateCart({ open, setOpen, selectData, cartData, setCar
                                     width: "100%"
                                 }}
                                 placeholder="ចំនួន"
+                                size={theme.inputSize}
                             />
                         </Form.Item>
                     </Col>
@@ -95,6 +97,7 @@ export default function UpdateCart({ open, setOpen, selectData, cartData, setCar
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.inputSize}
                                 placeholder="តម្លៃឯកតា"
                             />
                         </Form.Item>
@@ -119,6 +122,7 @@ export default function UpdateCart({ open, setOpen, selectData, cartData, setCar
                             style={{
                                 width: "100%"
                             }}
+                            size={theme.btnSize}
                         >
                             បញ្ចូល
                         </Button>

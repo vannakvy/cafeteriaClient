@@ -8,6 +8,7 @@ import { msgTitle } from '../../asset/data/msgTitle'
 import { isHex, mutationCallBackFn, noticeAction } from '../../functions/fn'
 import { GET_ALL_PRODUCT } from '../../graphql/product'
 import { ADD_SUB_SALEORDER, DELETE_SALEORDER, DELETE_SUB_SALEORDER, UPDATE_SALEORDER, VIEW_SALEORDER_BY_ID } from '../../graphql/saleOrder'
+import { theme } from '../../static/theme'
 import MapViewOrder from './comp/mapViewOrder'
 import PrintSaleOrder from './modal/printSaleOrder'
 import UpdateCustomer from './modal/updateCustomer'
@@ -49,6 +50,7 @@ export default function ViewSaleOrder() {
         geolocation: {
             lat: data?.customer?.geolocation?.lat,
             long: data?.customer?.geolocation?.long,
+            placename: data?.customer?.geolocation?.placename
         },
         date: moment(data?.date)
     }
@@ -129,7 +131,7 @@ export default function ViewSaleOrder() {
     }, [data?.products])
 
     useEffect(() => {
-        if(data){
+        if (data) {
             setTotalBL({
                 subTotal: data?.subTotal,
                 tax: data?.tax,
@@ -148,7 +150,15 @@ export default function ViewSaleOrder() {
                 input: {
                     current: 1,
                     limit: 5,
-                    keyword: searchKeyword
+                    keyword: searchKeyword,
+                    sort: {
+                        name: "",
+                        value: "",
+                    },
+                    filter: {
+                        name: "",
+                        value: "",
+                    }
                 }
             }
         })
@@ -385,7 +395,7 @@ export default function ViewSaleOrder() {
                             scroll={{ x: 500, y: 200 }}
                             rowKey={record => record.id}
                             pagination={false}
-                            size="small"
+                            size={theme.tableSize}
                         />
                     </Col>
                     <Col
@@ -497,7 +507,7 @@ export default function ViewSaleOrder() {
                                                 }}
                                                 value={totalBL.tax}
                                                 onBlur={e => {
-                                                    setAddTax(!addTax)  
+                                                    setAddTax(!addTax)
                                                     onUpdateTotalBL({
                                                         id: data?.id,
                                                         tax: parseFloat(e.target.value)
@@ -532,10 +542,13 @@ export default function ViewSaleOrder() {
                                                     textAlign: "right"
                                                 }}
                                                 value={totalBL.offer}
-                                                onBlur={e => onUpdateTotalBL({
-                                                    id: data?.id,
-                                                    offer: parseFloat(e.target.value)
-                                                })}
+                                                onBlur={e => {
+                                                    onUpdateTotalBL({
+                                                        id: data?.id,
+                                                        offer: parseFloat(e.target.value)
+                                                    })
+                                                    setAddOffer(!addOffer)
+                                                }}
                                             />
                                         ) :
                                             totalBL.offer + "$"
@@ -564,10 +577,13 @@ export default function ViewSaleOrder() {
                                                     textAlign: "right"
                                                 }}
                                                 value={totalBL.delivery}
-                                                onBlur={e => onUpdateTotalBL({
-                                                    id: data?.id,
-                                                    delivery: parseFloat(e.target.value)
-                                                })}
+                                                onBlur={e => {
+                                                    onUpdateTotalBL({
+                                                        id: data?.id,
+                                                        delivery: parseFloat(e.target.value)
+                                                    })
+                                                    setAddDelivery(!addDelivery)
+                                                }}
                                             />
                                         ) :
                                             totalBL.delivery + "$"
@@ -608,10 +624,13 @@ export default function ViewSaleOrder() {
                                                     textAlign: "right"
                                                 }}
                                                 value={totalBL.payment}
-                                                onBlur={e => onUpdateTotalBL({
-                                                    id: data?.id,
-                                                    payment: parseFloat(e.target.value)
-                                                })}
+                                                onBlur={e => {
+                                                    onUpdateTotalBL({
+                                                        id: data?.id,
+                                                        payment: parseFloat(e.target.value)
+                                                    })
+                                                    setAddPayment(!addPayment)
+                                                }}
                                             />
                                         ) :
                                             totalBL.payment + "$"
@@ -652,6 +671,7 @@ export default function ViewSaleOrder() {
                                     icon={<PrinterOutlined />}
                                     type="primary"
                                     onClick={() => setOpenPrint(true)}
+                                    size={theme.btnSize}
                                 >
                                     បោះពុម្ព
                                 </Button>
@@ -673,6 +693,7 @@ export default function ViewSaleOrder() {
                                         style={{
                                             width: "100%"
                                         }}
+                                        size={theme.btnSize}
                                     >
                                         លុបវិក័យបត្រ
                                     </Button>

@@ -1,7 +1,8 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined, MoreOutlined, SearchOutlined } from "@ant-design/icons"
 import { Button, Input, Popconfirm, Space, Tooltip, Image } from "antd"
+import { theme } from "../../../static/theme"
 
-export const ProductCol = ({ current, limit, setKeyword, dataDb, onViewFn, onAddFn, onUpdateFn, onDeleteFn }) => {
+export const ProductCol = ({ getRole, current, limit, setKeyword, dataDb, onViewFn, onAddFn, onUpdateFn, onDeleteFn }) => {
 
     const array = [
         {
@@ -65,10 +66,24 @@ export const ProductCol = ({ current, limit, setKeyword, dataDb, onViewFn, onAdd
                     },
                 },
                 {
-                    title: 'តម្លៃឯកតា',
+                    title: 'តម្លៃដើម',
+                    dataIndex: 'cost',
+                    key: 'cost',
+                    width: 100,
+                    align: "center",
+                    ellipsis: true,
+                    render: (value, row, index) => {
+                        return <Tooltip title={`${row.cost}`}>
+                            {`${row.cost.toFixed(2)}$`}
+                        </Tooltip>
+                    },
+                },
+                {
+                    title: 'តម្លៃលក់',
                     dataIndex: 'price',
                     key: 'price',
                     width: 100,
+                    align: "center",
                     ellipsis: true,
                     render: (value, row, index) => {
                         return <Tooltip title={`${row.price}`}>
@@ -79,18 +94,20 @@ export const ProductCol = ({ current, limit, setKeyword, dataDb, onViewFn, onAdd
                 {
                     title: 'ខ្នាត',
                     dataIndex: 'um',
+                    align: "center",
                     key: 'um',
-                    width: 50,
+                    width: 100,
                     ellipsis: true,
                 },
                 {
                     title: 'ក្នុងឃ្លាំង',
                     dataIndex: 'inStock',
                     key: 'inStock',
+                    align: "center",
                     width: 100,
                     ellipsis: true,
                     render: (value, row, index) => {
-                        return <Tooltip title={`${row.inStock}}`}>
+                        return <Tooltip title={`${row.inStock}`}>
                             {`${row.inStock}`}
                         </Tooltip>
                     },
@@ -99,7 +116,8 @@ export const ProductCol = ({ current, limit, setKeyword, dataDb, onViewFn, onAdd
                     title: 'ប្រភេទទំនិញ',
                     dataIndex: 'category.descriptioon',
                     key: 'category.descriptioon',
-                    width: 100,
+                    width: 200,
+                    align: "center",
                     ellipsis: true,
                     // filters: tableFilter(dataDb, "category", "description"),
                     render: (value, row, index) => {
@@ -137,7 +155,9 @@ export const ProductCol = ({ current, limit, setKeyword, dataDb, onViewFn, onAdd
                     style={{
                         width: "100%"
                     }}
+                    disabled= {!getRole?.create}
                     onClick={() => onAddFn()}
+                    size={theme.btnSize}
                 >
                     បញ្ជូលថ្មី
                 </Button>
@@ -152,36 +172,42 @@ export const ProductCol = ({ current, limit, setKeyword, dataDb, onViewFn, onAdd
                     align: "center",
                     render: (value, row, index) => {
                         return <Space>
-                            <Button
-                                type="link"
-                                size="small"
-                                onClick={() => onViewFn(row)}
-                            >
-                                <EyeOutlined />
-                            </Button>
-                            <Button
-                                type="link"
-                                size="small"
-                                onClick={() => onUpdateFn(row)}
-                            >
-                                <EditOutlined />
-                            </Button>
-                            <Popconfirm
-                                title="តើអ្នកចង់លុបមែនទេ?"
-                                okText="ចង់"
-                                cancelText="មិនចង់"
-                                okType="danger"
-                                placement="left"
-                                onConfirm={() => onDeleteFn(row)}
-                            >
+                            {getRole?.view &&
                                 <Button
                                     type="link"
-                                    danger
                                     size="small"
+                                    onClick={() => onViewFn(row)}
                                 >
-                                    <DeleteOutlined />
+                                    <EyeOutlined />
                                 </Button>
-                            </Popconfirm>
+                            }
+                            {getRole?.update &&
+                                <Button
+                                    type="link"
+                                    size="small"
+                                    onClick={() => onUpdateFn(row)}
+                                >
+                                    <EditOutlined />
+                                </Button>
+                            }
+                            {getRole?.delete &&
+                                <Popconfirm
+                                    title="តើអ្នកចង់លុបមែនទេ?"
+                                    okText="ចង់"
+                                    cancelText="មិនចង់"
+                                    okType="danger"
+                                    placement="left"
+                                    onConfirm={() => onDeleteFn(row)}
+                                >
+                                    <Button
+                                        type="link"
+                                        danger
+                                        size="small"
+                                    >
+                                        <DeleteOutlined />
+                                    </Button>
+                                </Popconfirm>
+                            }
                         </Space>
                     },
                 }

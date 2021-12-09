@@ -5,6 +5,7 @@ import { useLazyQuery, useMutation } from '@apollo/client'
 import { GET_ALL_DELIVER } from '../../../graphql/deliver'
 import { UPDATE_SALEORDER, VIEW_SALEORDER_BY_ID } from '../../../graphql/saleOrder'
 import { msgTitle } from '../../../asset/data/msgTitle'
+import { theme } from '../../../static/theme'
 
 export default function UpdateDeliver({ open, setOpen, data}) {
     let [form] = Form.useForm()
@@ -145,6 +146,7 @@ export default function UpdateDeliver({ open, setOpen, data}) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

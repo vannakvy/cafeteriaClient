@@ -3,6 +3,7 @@ import { Col, Drawer, Input, Row, Form, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { convertTel, convertUpdateData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { ADD_CUSTOMER, GET_ALL_CUSTOMER, UPDATE_CUSTOMER } from '../../../graphql/customer'
+import { theme } from '../../../static/theme'
 
 export default function AddUpdateCustomer({ open, setOpen, data, type }) {
   let [form] = Form.useForm()
@@ -142,6 +143,7 @@ export default function AddUpdateCustomer({ open, setOpen, data, type }) {
                 style={{
                   width: "100%"
                 }}
+                size={theme.btnSize}
               >
                 បញ្ជូល
               </Button>

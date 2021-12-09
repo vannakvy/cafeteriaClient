@@ -6,6 +6,7 @@ import ViewDeliver from '../components/deliver/modal/viewDeliver'
 import { DeliverCol } from '../components/deliver/tableCol/deliverCol'
 import { mutationCallBackFn, noticeAction } from '../functions/fn'
 import { DELETE_DELIVER, GET_ALL_DELIVER } from '../graphql/deliver'
+import { theme } from '../static/theme'
 
 export default function Deliver() {
     const [getDelivers, { data: DeliverDb, loading }] = useLazyQuery(GET_ALL_DELIVER, {
@@ -74,7 +75,7 @@ export default function Deliver() {
             <ViewDeliver open={openView} setOpen={setOpenView} data={viewData} />
             <Table
                 {...loading}
-                size="small"
+                size={theme.tableSize}
                 bordered
                 columns={DeliverCol({ current, limit, setKeyword, onViewFn, onAddFn, onUpdateFn, onDeleteFn })}
                 dataSource={DeliverDb?.getDelivers?.data}

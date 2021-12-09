@@ -13,6 +13,8 @@ import AddSaleOrder from "../components/saleOrder/addSaleOrder";
 import ViewSaleOrder from '../components/saleOrder/viewSaleOrder'
 import AddPurchaseOrder from '../components/purchaseOrder/addPurchaseOrder'
 import ViewPurchaseOrder from '../components/purchaseOrder/viewPurchaseOrder'
+import { theme } from '../static/theme';
+import Report from '../pages/report';
 
 export function keyMenu(e) {
     const myArr = e.split("/");
@@ -51,19 +53,47 @@ export function keyMenu(e) {
 
 export const iconMenu = (e) => {
     if (e === "/") {
-        return <BarChartOutlined />
+        return <BarChartOutlined
+            style={{
+                fontSize: theme.MenuFontSize
+            }}
+        />
     } else if (e === "/product") {
-        return <ShoppingCartOutlined />
+        return <ShoppingCartOutlined
+            style={{
+                fontSize: theme.MenuFontSize
+            }}
+        />
     } else if (e === "/saleorder") {
-        return <PieChartOutlined />
+        return <PieChartOutlined
+            style={{
+                fontSize: theme.MenuFontSize
+            }}
+        />
     } else if (e === "/purchaseorder") {
-        return <CreditCardOutlined />
+        return <CreditCardOutlined
+            style={{
+                fontSize: theme.MenuFontSize
+            }}
+        />
     } else if (e === "/reconciliation") {
-        return <SyncOutlined />
+        return <SyncOutlined
+            style={{
+                fontSize: theme.MenuFontSize
+            }}
+        />
     } else if (e === "/report") {
-        return <FileSearchOutlined />
+        return <FileSearchOutlined
+            style={{
+                fontSize: theme.MenuFontSize
+            }}
+        />
     } else if (e === "/adminstator") {
-        return <UserOutlined />
+        return <UserOutlined style={{
+            fontSize: theme.MenuFontSize
+        }}
+
+        />
     }
 }
 
@@ -124,12 +154,12 @@ export const contentRouter = (e) => {
         return <PurchaseOrder />
     } else if (e === "/addpurchaseorder") {
         return <AddPurchaseOrder />
-    }  else if (e === "/viewpurchaseorder/:slug") {
+    } else if (e === "/viewpurchaseorder/:slug") {
         return <ViewPurchaseOrder />
-    }  else if (e === "/reconciliation") {
+    } else if (e === "/reconciliation") {
         return <Reconciliation />
     } else if (e === "/report") {
-        return <FileSearchOutlined />
+        return <Report />
     } else if (e === "/customer") {
         return <Customer />
     } else if (e === "/supplier") {

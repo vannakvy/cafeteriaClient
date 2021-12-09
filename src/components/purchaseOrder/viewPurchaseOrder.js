@@ -8,6 +8,7 @@ import { msgTitle } from '../../asset/data/msgTitle'
 import { isHex, mutationCallBackFn, noticeAction } from '../../functions/fn'
 import { GET_ALL_PRODUCT } from '../../graphql/product'
 import { UPDATE_PURCHASEORDER, VIEW_PURCHASEORDER_BY_ID, DELETE_PURCHASEORDER, ADD_SUB_PURCHASEORDER, DELETE_SUB_PURCHASEORDER } from '../../graphql/purchaseOrder'
+import { theme } from '../../static/theme'
 import MapViewOrder from './comp/mapViewOrder'
 import PrintPurchaseOrder from './modal/printPurchaseOrder'
 import UpdateSupplier from './modal/updateCustomer'
@@ -122,7 +123,15 @@ export default function ViewPurchaseOrder() {
                 input: {
                     current: 1,
                     limit: 5,
-                    keyword: searchKeyword
+                    keyword: searchKeyword,
+                    sort: {
+                        name: "",
+                        value: "",
+                    },
+                    filter: {
+                        name: "",
+                        value: "",
+                    }
                 }
             }
         })
@@ -308,7 +317,7 @@ export default function ViewPurchaseOrder() {
                             scroll={{ x: 500, y: 200 }}
                             rowKey={record => record.product.id}
                             pagination={false}
-                            size="small"
+                            size={theme.tableSize}
                         />
                     </Col>
                     <Col

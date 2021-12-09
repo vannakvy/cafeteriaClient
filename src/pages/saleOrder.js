@@ -7,6 +7,7 @@ import { SaleOrderCol } from '../components/saleOrder/tableCols/saleOrderCol'
 import SetStatusOrder from '../components/saleOrder/modal/setStatusOrder'
 import { useHistory } from 'react-router-dom'
 import { msgTitle } from '../asset/data/msgTitle'
+import { theme } from '../static/theme'
 
 export default function SaleOrder() {
     let history = useHistory()
@@ -82,7 +83,7 @@ export default function SaleOrder() {
             <SetStatusOrder open={openStatus} setOpen={setOpenStatus} updateData={updateData} />
             <Table
                 {...loading}
-                size="small"
+                size={theme.tableSize}
                 bordered
                 columns={SaleOrderCol({ current, limit, setKeyword, onSetStatusFn, onAddFn, onDeleteFn })}
                 dataSource={SaleOrderDb?.getSaleOrders?.data}

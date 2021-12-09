@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { msgTitle } from '../../../asset/data/msgTitle'
 import { convertUpdateData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { UPDATE_ORDER_STATUS, VIEW_SALEORDER_BY_ID } from '../../../graphql/saleOrder'
+import { theme } from '../../../static/theme'
 
 export default function UpdatetStatus({ open, setOpen, updateData }) {
     const [updateOrderStatus] = useMutation(UPDATE_ORDER_STATUS, mutationCallBackFn(VIEW_SALEORDER_BY_ID, 'getSaleOrderById'))
@@ -130,6 +131,7 @@ export default function UpdatetStatus({ open, setOpen, updateData }) {
                                     width: "100%"
                                 }}
                                 htmlType="submit"
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

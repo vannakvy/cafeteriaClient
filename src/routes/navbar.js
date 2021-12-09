@@ -3,19 +3,19 @@ import { Image, Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../asset/img/logo.png'
 import { combineMenu, iconMenu, keyMenu } from '../functions/routeFn'
-import { useLocation } from 'react-router-dom'
 import { DataController } from '../context/dataProvider';
+import { theme } from '../static/theme';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 export default function NavBar({ collapsed, setCollapsed }) {
-  const { content } = useContext(DataController)
+  const { content, urlPath } = useContext(DataController)
 
-  const urlPath = useLocation().pathname
+  // const urlPath = useLocation().pathname
 
   return (
-    <Sider theme="light" collapsible collapsed={collapsed} onCollapse={() => setCollapsed(!collapsed)}>
+    <Sider theme="light" collapsible collapsed={collapsed} onCollapse={() => setCollapsed(!collapsed)}  width={260}>
       <Link to="/">
         <div className="logo">
           <Image width={"100%"} src={Logo} preview={false} />
@@ -25,15 +25,34 @@ export default function NavBar({ collapsed, setCollapsed }) {
         {
           combineMenu(content?.getContentById?.content).map(load =>
             load.subContent.length === 0 ? (
-              <Menu.Item key={load.path} icon={iconMenu(load.path)}>
+              <Menu.Item
+                key={load.path}
+                icon={iconMenu(load.path)}
+                style={{
+                  fontSize: theme.MenuFontSize
+                }}
+              >
                 {load.title}
                 <Link to={load.path} />
               </Menu.Item>
             ) : (
-              <SubMenu key={load.path} icon={iconMenu(load.path)} title={load.title}>
+              <SubMenu
+                key={load.path}
+                icon={iconMenu(load.path)}
+                title={load.title}
+                style={{
+                  fontSize: theme.MenuFontSize
+                }}
+              >
                 {
                   load.subContent.map(load => (
-                    <Menu.Item key={load.path}>
+                    <Menu.Item
+                      key={load.path}
+
+                      style={{
+                        fontSize: theme.MenuFontSize
+                      }}
+                    >
                       {load.title}
                       <Link to={load.path} />
                     </Menu.Item>

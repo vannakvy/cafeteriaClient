@@ -3,6 +3,7 @@ import { Row, Form, Modal, Col, Select, Input, DatePicker, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { convertEditData, noticeAction } from '../../../functions/fn'
 import { GET_ALL_CUSTOMER } from '../../../graphql/customer'
+import { theme } from '../../../static/theme'
 
 export default function AddCustomerToSale({ open, setOpen, data, setData }) {
     let [form] = Form.useForm()
@@ -83,6 +84,7 @@ export default function AddCustomerToSale({ open, setOpen, data, setData }) {
                                 optionFilterProp="children"
                                 onSearch={onSearch}
                                 onSelect={onSelect}
+                                size={theme.selectSize}
                             >
                                 {
                                     CustomerDb?.getCustomers?.data.map(load =>
@@ -143,6 +145,7 @@ export default function AddCustomerToSale({ open, setOpen, data, setData }) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

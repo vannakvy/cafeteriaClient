@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Col, AutoComplete, Input, Divider, Button, Empty, Image, Typography, Pagination, Table, Descriptions, InputNumber, Timeline } from 'antd'
-import { GET_ALL_CATEGORY, GET_ALL_PRODUCT, GET_PRODUCT_BY_CTG } from '../../graphql/product'
+import { GET_ALL_CATEGORY, GET_ALL_PRODUCT, GET_PRODUCT_BY_CTG, GET_PRODUCT_BY_ID } from '../../graphql/product'
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { isHex, noticeAction, searchOptions, convertProduct } from '../../functions/fn'
+import { noticeAction, searchOptions, convertProduct } from '../../functions/fn'
 import { PlusCircleOutlined, SearchOutlined } from '@ant-design/icons'
 import moment from 'moment'
 import { CartCol } from './tableCols/cartCol'
@@ -11,6 +11,7 @@ import AddSupplierToPO from './modal/addSupplierToPO'
 import { msgTitle } from '../../asset/data/msgTitle'
 import { ADD_PURCHASEORDER } from '../../graphql/purchaseOrder'
 import PrintPurchaseOrder from './modal/printPurchaseOrder'
+import { theme } from '../../static/theme'
 
 export default function AddPurchaseOrder() {
     const { data: CategoryDb } = useQuery(GET_ALL_CATEGORY, {
@@ -35,6 +36,12 @@ export default function AddPurchaseOrder() {
         onError: (err) => {
             noticeAction("error", err?.graphQLErrors[0]?.message + '')
         }
+    })
+    
+    const [getProductById] = useMutation(GET_PRODUCT_BY_ID, {
+        onError: (err) => {
+            noticeAction("error", err?.graphQLErrors[0]?.message + '')
+        },
     })
 
     const [cartData, setCartData] = useState([])
@@ -76,7 +83,15 @@ export default function AddPurchaseOrder() {
                 input: {
                     current: 1,
                     limit: 5,
-                    keyword: searchKeyword
+                    keyword: searchKeyword,
+                    sort: {
+                        name: "",
+                        value: "",
+                    },
+                    filter: {
+                        name: "",
+                        value: "",
+                    }
                 }
             }
         })
@@ -120,11 +135,49 @@ export default function AddPurchaseOrder() {
     const handleSearch = (value) => {
         setSearchKeyword(value)
 
-        if (isHex(value)) {
-            pushToCart(value)
-            setSearchKeyword("")
-        }
+        // if (isHex(value)) {
+        //     pushToCart(value)
+        //     setSearchKeyword("")
+        // }
     };
+
+    const handleSearchEnter = async (e) => {
+        if (e.key === 'Enter') {
+            getProductById({
+                variables: {
+                    input: {
+                        id: e.target.value
+                    }
+                },
+                update(_, { data: productById }) {
+                    // console.log(productById.getProductById)
+                    let findProduct = productById.getProductById
+                    let newArray = [...cartData]
+                    let index = cartData?.findIndex(ele => ele.product === findProduct.id)
+            
+                    if (index === -1) {
+                        newArray.push({
+                            ...findProduct,
+                            product: findProduct?.id,
+                            qty: 1,
+                            price: findProduct.price,
+                            total: 1 * findProduct.price,
+                            remark: ""
+                        })
+                    } else {
+                        newArray[index].qty = newArray[index].qty + 1
+                        newArray[index].price = findProduct.price
+                        newArray[index].total = (newArray[index].qty) * findProduct.price
+                    }
+            
+                    setCartData(newArray)
+                    setSearchKeyword("")
+                }
+            })
+        }
+
+
+    }
 
 
     const onSelect = (value) => {
@@ -142,14 +195,14 @@ export default function AddPurchaseOrder() {
                 ...findData,
                 product: findData?.id,
                 qty: 1,
-                price: findData.price,
+                price: findData.cost,
                 total: 1 * findData.price,
                 remark: ""
             })
         } else {
             newArray[index].qty = newArray[index].qty + 1
-            newArray[index].price = findData.price
-            newArray[index].total = (newArray[index].qty) * findData.price
+            newArray[index].price = findData.cost
+            newArray[index].total = (newArray[index].qty) * findData.cost
         }
 
         setCartData(newArray)
@@ -166,14 +219,14 @@ export default function AddPurchaseOrder() {
                 ...value,
                 product: value?.id,
                 qty: 1,
-                price: value.price,
+                price: value.cost,
                 total: 1 * value.price,
                 remark: ""
             })
         } else {
             newArray[index].qty = newArray[index].qty + 1
-            newArray[index].price = value.price
-            newArray[index].total = (newArray[index].qty) * value.price
+            newArray[index].price = value.cost
+            newArray[index].total = (newArray[index].qty) * value.cost
         }
 
         setCartData(newArray)
@@ -284,6 +337,7 @@ export default function AddPurchaseOrder() {
                                         options={searchOptions(ProductSearchDb?.getProducts?.data)}
                                         onSelect={onSelect}
                                         onSearch={handleSearch}
+                                        onInputKeyDown={handleSearchEnter}
                                         value={searchKeyword}
                                     >
                                         <Input
@@ -298,41 +352,49 @@ export default function AddPurchaseOrder() {
                                     <Divider orientation="left">ប្រភេទទំនិញ៖</Divider>
                                 </Col>
                                 <Col
-                                    xs={12}
-                                    md={6}
-                                    key={"all"}
+                                    xs={24}
                                 >
-                                    <Button
-                                        type={activeCategory === "all" ? "primary" : "dashed"}
-                                        style={{
-                                            width: "100%"
-                                        }}
-                                        onClick={() => selectCategoryFn({
-                                            id: "all"
-                                        })}
-                                    >
-                                        ទាំងអស់
-                                    </Button>
-                                </Col>
-                                {
-                                    CategoryDb?.getCategories?.data?.map(load => (
+                                    <Row gutter={[16, 16]}>
                                         <Col
                                             xs={12}
-                                            md={6}
-                                            key={load.id}
+                                            md={8}
+                                            key={"all"}
                                         >
                                             <Button
-                                                type={activeCategory === load.id ? "primary" : "dashed"}
+                                                type={activeCategory === "all" ? "primary" : "dashed"}
                                                 style={{
                                                     width: "100%"
                                                 }}
-                                                onClick={() => selectCategoryFn(load)}
+                                                onClick={() => selectCategoryFn({
+                                                    id: "all"
+                                                })}
+                                                size={theme.btnSize}
                                             >
-                                                {load.description}
+                                                ទាំងអស់
                                             </Button>
                                         </Col>
-                                    ))
-                                }
+                                        {
+                                            CategoryDb?.getCategories?.data?.map(load => (
+                                                <Col
+                                                    xs={12}
+                                                    md={8}
+                                                    key={load.id}
+                                                >
+                                                    <Button
+                                                        type={activeCategory === load.id ? "primary" : "dashed"}
+                                                        style={{
+                                                            width: "100%"
+                                                        }}
+                                                        size={theme.btnSize}
+                                                        onClick={() => selectCategoryFn(load)}
+                                                    >
+                                                        {load.description}
+                                                    </Button>
+                                                </Col>
+                                            ))
+                                        }
+                                    </Row>
+                                </Col>
                                 <Col
                                     xs={24}
                                     style={{
@@ -373,7 +435,7 @@ export default function AddPurchaseOrder() {
                                                                 {load.description}
                                                             </Typography.Title>
                                                             <Typography.Text mark>
-                                                                តម្លៃ៖ {load.price}$ /{load.um}
+                                                                តម្លៃ៖ {load.cost}$ /{load.um}
                                                             </Typography.Text><br />
                                                             <Typography.Text ellipsis={true}>
                                                                 {load.id}
@@ -422,7 +484,7 @@ export default function AddPurchaseOrder() {
                             scroll={{ x: 500, y: 200 }}
                             rowKey={record => record.product}
                             pagination={false}
-                            size="small"
+                            size={theme.tableSize}
                         />
                         <div
                             style={{
@@ -665,6 +727,7 @@ export default function AddPurchaseOrder() {
                                     }}
                                     disabled={supplierData?.companyName && cartData.length !== 0 ? false : true}
                                     onClick={() => onSubmitFn()}
+                                    size={theme.btnSize}
                                 >
                                     បង្កើត
                                 </Button>

@@ -3,6 +3,7 @@ import { Row, Form, Modal, Col, Select, Input, DatePicker, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { convertEditData, noticeAction } from '../../../functions/fn'
 import { GET_ALL_SUPPLIER } from '../../../graphql/supplier'
+import { theme } from '../../../static/theme'
 
 export default function AddSupplierToPO({ open, setOpen, data, setData }) {
     let [form] = Form.useForm()
@@ -82,6 +83,7 @@ export default function AddSupplierToPO({ open, setOpen, data, setData }) {
                                 optionFilterProp="children"
                                 onSearch={onSearch}
                                 onSelect={onSelect}
+                                size={theme.selectSize}
                             >
                                 {
                                     SupplierDb?.getSuppliers?.data.map(load =>
@@ -142,6 +144,7 @@ export default function AddSupplierToPO({ open, setOpen, data, setData }) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

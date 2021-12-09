@@ -3,8 +3,9 @@ import { Modal, Input, Button, Alert, Popconfirm } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { ADD_CATEGORY, DELETE_CATEGORY, GET_ALL_CATEGORY, UPDATE_CATEGORY } from '../../../graphql/product'
+import { theme } from '../../../static/theme'
 
-export default function AddEditCategory({ open, setOpen, type, data }) {
+export default function AddEditCategory({ open, setOpen, type, data, getRole }) {
     const [setCategories] = useMutation(ADD_CATEGORY, mutationCallBackFn(GET_ALL_CATEGORY, 'getCategories'))
 
     const [updateCategories] = useMutation(UPDATE_CATEGORY, mutationCallBackFn(GET_ALL_CATEGORY, 'getCategories'))
@@ -93,12 +94,16 @@ export default function AddEditCategory({ open, setOpen, type, data }) {
                     okType="danger"
                     placement="bottom"
                     onConfirm={() => onDeleteFn()}
+                    disabled={!getRole?.delete}
+                    btnSize={theme.btnSize}
                 >
                     <Button
                         danger
                         style={{
                             float: "left"
                         }}
+                        disabled={!getRole?.delete}
+                        size={theme.btnSize}
                     >
                         លុប
                     </Button>
@@ -107,12 +112,15 @@ export default function AddEditCategory({ open, setOpen, type, data }) {
                     key="submit"
                     type="primary"
                     onClick={() => onAddNewFn()}
+                    size={theme.btnSize}
                 >
                     បញ្ចូលថ្មី
                 </Button> : <Button
                     key="update"
                     type="primary"
+                    disabled={!getRole?.update}
                     onClick={() => onUpdateFn()}
+                    size={theme.btnSize}
                 >
                     កែប្រែ
                 </Button>

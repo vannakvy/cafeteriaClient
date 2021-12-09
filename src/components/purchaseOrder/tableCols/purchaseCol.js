@@ -2,6 +2,7 @@ import { DeleteOutlined, EyeOutlined, MoreOutlined, SearchOutlined } from "@ant-
 import { Button, Input, Popconfirm, Tooltip, Tag } from "antd"
 import moment from "moment"
 import { Link } from "react-router-dom"
+import { theme } from '../../../static/theme'
 
 export const PurchaseOrderCol = ({ current, limit, setKeyword, onSetStatusFn, onAddFn, onDeleteFn }) => {
 
@@ -44,7 +45,8 @@ export const PurchaseOrderCol = ({ current, limit, setKeyword, onSetStatusFn, on
                     title: 'កាលបរិច្ឆេទ',
                     dataIndex: 'date',
                     key: 'date',
-                    width: 100,
+                    width: 200,
+                    align: "center",
                     ellipsis: true,
                     render: (value, row, index) => {
                         return <Tooltip title={moment(row.date).format("DD-MMM-YYYY")}>
@@ -150,7 +152,7 @@ export const PurchaseOrderCol = ({ current, limit, setKeyword, onSetStatusFn, on
                     title: 'ស្ថានភាព',
                     dataIndex: 'status',
                     key: 'status',
-                    width: 100,
+                    width: 150,
                     ellipsis: true,
                     align: "center",
                     render: (value, row, index) => {
@@ -204,6 +206,7 @@ export const PurchaseOrderCol = ({ current, limit, setKeyword, onSetStatusFn, on
                         width: "100%"
                     }}
                     onClick={() => onAddFn()}
+                    size={theme.btnSize}
                 >
                     បញ្ជូលថ្មី
                 </Button>
@@ -213,7 +216,7 @@ export const PurchaseOrderCol = ({ current, limit, setKeyword, onSetStatusFn, on
                     title: () => <MoreOutlined />,
                     dataIndex: 'more',
                     key: 'more',
-                    width: 100,
+                    width: 150,
                     fixed: 'right',
                     align: "center",
                     render: (value, row, index) => {

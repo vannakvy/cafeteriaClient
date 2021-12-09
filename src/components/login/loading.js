@@ -1,7 +1,8 @@
 import { Image } from 'antd'
 import React from 'react'
-import LoadingGif from '../../asset/gif/loading.gif'
-import Logo from '../../asset/img/logo.png'
+import LoadingGif from '../../asset/gif/bagLoading.gif'
+import Loading1Gif from '../../asset/gif/breadLoading.gif'
+// import Logo from '../../asset/img/logo.png'
 import FadeIn from 'react-fade-in'
 
 export default function Loading() {
@@ -24,19 +25,57 @@ export default function Loading() {
                         transform: "translate(-50%, -50%)",
                     }}
                 >
+                    <div
+                        style={{
+                            position: "absolute",
+                            // padding: "8px 8px 2px 8px",
+                            // backgroundColor: "white",
+                            // top: "200px",
+                            left: "50px",
+                            transform: "translate(-50%, -50%)",
+                            // borderRadius: 100,
+                            // boxShadow: "1px 1px 5px #b2b2b2"
+                        }}
+                    >
+                        <Image
+                            src={LoadingGif}
+                            alt="loading"
+                            width="350px"
+                            preview={false}
+                        />
+                    </div>
+                    <div
+                        style={{
+                            position: "absolute",
+                            // padding: "8px 8px 2px 8px",
+                            // backgroundColor: "white",
+                            top: "20px",
+                            left: "-50px",
+                            transform: "translate(-50%, -50%)",
+                            // borderRadius: 100,
+                            // boxShadow: "1px 1px 5px #b2b2b2"
+                        }}
+                    >
+                        <Image
+                            src={Loading1Gif}
+                            alt="loading"
+                            width="350px"
+                            preview={false}
+                        />
+                    </div>
 
-                    <Image
+                    {/* <Image
                         src={LoadingGif}
                         alt="loading"
-                        width="300px"
+                        width="350px"
                         preview={false}
-                    />
-                    <div
+                    /> */}
+                    {/* <div
                         style={{
                             position: "absolute",
                             padding: "8px 8px 2px 8px",
                             backgroundColor: "white",
-                            top: "13px",
+                            top: "50px",
                             left: "50%",
                             transform: "translate(-50%, -50%)",
                             borderRadius: 100,
@@ -48,7 +87,7 @@ export default function Loading() {
                             width="50px"
                             preview={false}
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </FadeIn>

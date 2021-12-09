@@ -1,5 +1,6 @@
 import { CheckOutlined, DeleteOutlined, EditOutlined, FileSearchOutlined, FileSyncOutlined, MoreOutlined, PlusCircleOutlined, SearchOutlined } from "@ant-design/icons"
 import { Button, Input, Popconfirm, Space, Tooltip } from "antd"
+import { theme } from "../../../static/theme"
 
 export const UserCol = ({ current, limit, setKeyword, onConfigFn, onAddFn, onUpdateFn, onDeleteFn }) => {
 
@@ -103,6 +104,7 @@ export const UserCol = ({ current, limit, setKeyword, onConfigFn, onAddFn, onUpd
                         width: "100%"
                     }}
                     onClick={() => onAddFn()}
+                    size={theme.btnSize}
                 >
                     បញ្ជូលថ្មី
                 </Button>

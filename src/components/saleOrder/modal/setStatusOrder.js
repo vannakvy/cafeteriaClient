@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { msgTitle } from '../../../asset/data/msgTitle'
 import { convertUpdateData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { GET_ALL_SALEORDER, UPDATE_ORDER_STATUS } from '../../../graphql/saleOrder'
+import { theme } from '../../../static/theme'
 
 export default function SetStatusOrder({ open, setOpen, updateData }) {
     const [updateOrderStatus] = useMutation(UPDATE_ORDER_STATUS, mutationCallBackFn(GET_ALL_SALEORDER, 'getSaleOrders'))
@@ -130,6 +131,7 @@ export default function SetStatusOrder({ open, setOpen, updateData }) {
                                     width: "100%"
                                 }}
                                 htmlType="submit"
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>

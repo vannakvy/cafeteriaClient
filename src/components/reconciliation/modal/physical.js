@@ -1,13 +1,13 @@
-import { useLazyQuery, useMutation } from '@apollo/client'
-import { Col, Modal, Row, Form, Input, Button, Select } from 'antd'
+import { useLazyQuery } from '@apollo/client'
+import { Col, Modal, Row, Form, Button, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { noticeAction } from '../../../functions/fn'
-import { CREATE_GENERATE_INVENTORY, GET_LIST_RECON } from '../../../graphql/reconciliation'
+import { GET_LIST_RECON } from '../../../graphql/reconciliation'
 
 export default function Physical({ open, setOpen }) {
     let [form] = Form.useForm()
 
-    const [phsicalInventory, { data: dataDb, loading }] = useLazyQuery(GET_LIST_RECON, {
+    const [phsicalInventory, { data: dataDb }] = useLazyQuery(GET_LIST_RECON, {
         onError: (err) => {
             noticeAction("error", err?.graphQLErrors[0]?.message + '')
         },

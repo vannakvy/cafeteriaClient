@@ -5,6 +5,7 @@ import { msgTitle } from '../../../asset/data/msgTitle'
 import { convertEditData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { GET_ALL_CUSTOMER } from '../../../graphql/customer'
 import { UPDATE_SALEORDER, VIEW_SALEORDER_BY_ID } from '../../../graphql/saleOrder'
+import { theme } from '../../../static/theme'
 
 export default function UpdateCustomer({ open, setOpen, data }) {
     let [form] = Form.useForm()
@@ -106,6 +107,7 @@ export default function UpdateCustomer({ open, setOpen, data }) {
                                 optionFilterProp="children"
                                 onSearch={onSearch}
                                 onSelect={onSelect}
+                                size={theme.selectSize}
                             >
                                 {
                                     CustomerDb?.getCustomers?.data.map(load =>

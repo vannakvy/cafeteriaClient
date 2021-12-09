@@ -6,6 +6,12 @@ export const CREATE_GENERATE_INVENTORY = gql`
     }
 `
 
+export const CREATE_GENERATE_ACCOUNTING = gql`
+    mutation generateAccounting($input: GenerateAccInput) {
+        generateAccounting(input: $input)
+    }
+`
+
 export const GET_LIST_RECON = gql`
     query phsicalInventory {
         phsicalInventory {
@@ -18,45 +24,31 @@ export const GET_LIST_RECON = gql`
 `
 
 export const GET_ALL_RECON = gql`
-    query PhsicalInventory {
-        phsicalInventory {
+    query getInventory($input: InputPagination) {
+    getInventory(input: $input) {
             id
             code
-            products {
-                closing {
-                    qty
-                    price
-                    total
-                }
-                variance {
-                    qty
-                    price
-                    total
-                }
-                physical {
-                    qty
-                    price
-                    total
-                }
-                stockOut {
-                    qty
-                    price
-                    total
-                }
-                stockIn {
-                    qty
-                    price
-                    total
-                }
-                openning {
-                    qty
-                    price
-                    total
-                }
-                id
-            }
             date
             remark
+            accounting {
+                openning {
+                    paid
+                    nonPaid
+                }
+                income {
+                    paid
+                    nonPaid
+                }
+                expense {
+                    paid
+                    nonPaid
+                }
+                closing {
+                    paid
+                    nonPaid
+                }
+            }
         }
     }
 `
+

@@ -3,6 +3,7 @@ import { Modal, Form, Row, Col, Input, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { convertUpdateData, mutationCallBackFn, noticeAction } from '../../../functions/fn'
 import { ADD_USER, GET_ALL_USER, UPDATE_USER } from '../../../graphql/user'
+import { theme } from '../../../static/theme'
 
 export default function AddUpdateUser({ open, setOpen, data, type }) {
     let [form] = Form.useForm()
@@ -120,6 +121,7 @@ export default function AddUpdateUser({ open, setOpen, data, type }) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បង្កើត
                             </Button>

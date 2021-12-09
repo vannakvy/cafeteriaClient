@@ -3,6 +3,7 @@ import { Button, Input, Popconfirm, Tooltip, Tag } from "antd"
 import moment from "moment"
 import { SyncOutlined } from '@ant-design/icons'
 import { Link } from "react-router-dom"
+import { theme } from "../../../static/theme"
 
 export const SaleOrderCol = ({ current, limit, setKeyword, onSetStatusFn, onAddFn, onDeleteFn }) => {
 
@@ -45,7 +46,8 @@ export const SaleOrderCol = ({ current, limit, setKeyword, onSetStatusFn, onAddF
                     title: 'កាលបរិច្ឆេទ',
                     dataIndex: 'date',
                     key: 'date',
-                    width: 100,
+                    align: "center",
+                    width: 150,
                     ellipsis: true,
                     render: (value, row, index) => {
                         return <Tooltip title={moment(row.date).format("DD-MMM-YYYY")}>
@@ -229,6 +231,7 @@ export const SaleOrderCol = ({ current, limit, setKeyword, onSetStatusFn, onAddF
                     style={{
                         width: "100%"
                     }}
+                    size={theme.btnSize}
                     onClick={() => onAddFn()}
                 >
                     បញ្ជូលថ្មី

@@ -3,6 +3,7 @@ import { Button, Col, Select, Form, Modal, Row, Input } from 'antd'
 import { convertEditData, noticeAction } from '../../../functions/fn'
 import { useLazyQuery } from '@apollo/client'
 import { GET_ALL_DELIVER } from '../../../graphql/deliver'
+import { theme } from '../../../static/theme'
 
 export default function AddDeliverToSale({ open, setOpen, data, setData}) {
     let [form] = Form.useForm()
@@ -84,6 +85,7 @@ export default function AddDeliverToSale({ open, setOpen, data, setData}) {
                                 optionFilterProp="children"
                                 onSearch={onSearch}
                                 onSelect={onSelect}
+                                size={theme.selectSize}
                             >
                                 {
                                     DeliverDb?.getDelivers?.data.map(load =>
@@ -127,6 +129,7 @@ export default function AddDeliverToSale({ open, setOpen, data, setData}) {
                                 style={{
                                     width: "100%"
                                 }}
+                                size={theme.btnSize}
                             >
                                 បញ្ចូល
                             </Button>
