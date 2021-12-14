@@ -26,6 +26,27 @@ export const GET_ALL_PRODUCT = gql`
     }
 `
 
+export const GET_ALL_PRODUCT_NO_PAGE = gql`
+    query GetAllProducts {
+        getAllProducts {
+            id
+            # code
+            description
+            image
+            cost
+            price
+            um
+            category {
+                id
+                description
+                product
+            }
+            inStock
+            remark
+        }
+    }
+`
+
 export const GET_PRODUCT_BY_ID = gql`
     mutation getProductById($input: InputId!) {
         getProductById(input: $input) {

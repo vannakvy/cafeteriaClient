@@ -249,3 +249,45 @@ export const addMonthForBarChart = (e) => {
         }
     }
 }
+
+export const reportCombineResAndProduct = (result, product) => {
+    let newArr = []
+
+    product?.map(load => {
+        let index = result.findIndex(ele => ele._id === load.id)
+
+        if(index === -1){
+            newArr.push({
+                _id: load.id,
+                description: load.description,
+                stockIn: 0,
+                stockOut: 0,
+                totalStock: 0,
+                openning: 0
+            })
+        } else {
+            newArr.push({
+                _id: result[index]._id,
+                description: result[index].description,
+                stockIn: result[index].stockIn,
+                stockOut: result[index].stockOut,
+                totalStock: result[index].totalStock,
+                openning: result[index].openning
+            })
+        }
+
+        return null
+    })
+
+    return newArr.sort((a,b) => (b.totalStock - a.totalStock))
+}
+
+export const addIndex = (e) => {
+    let newArr = []
+    e.map((load, index) => newArr.push({
+        ...load,
+        index: index+1
+    }))
+
+    return newArr
+}
