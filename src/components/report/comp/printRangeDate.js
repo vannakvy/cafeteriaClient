@@ -2,7 +2,7 @@ import { Col, Image, Row } from 'antd';
 import React, { PureComponent } from 'react';
 import Logo from '../../../asset/img/logo.png'
 
-class PrintComponent extends PureComponent {
+class PrintRangeDate extends PureComponent {
     render() {
 
         let data = this.props?.data
@@ -110,13 +110,6 @@ class PrintComponent extends PureComponent {
                                             width: "100px"
                                         }}
                                     >
-                                        ដើមគ្រា
-                                    </th>
-                                    <th
-                                        style={{
-                                            width: "100px"
-                                        }}
-                                    >
                                         ទិញចូល
                                     </th>
                                     <th
@@ -131,7 +124,7 @@ class PrintComponent extends PureComponent {
                                             width: "100px"
                                         }}
                                     >
-                                        ចុងគ្រា
+                                        សរុប
                                     </th>
                                 </tr>
                                 {
@@ -143,9 +136,6 @@ class PrintComponent extends PureComponent {
                                                 </td>
                                                 <td>
                                                     {load.description}
-                                                </td>
-                                                <td>
-                                                    {load.openning}
                                                 </td>
                                                 <td>
                                                     {load.stockIn === null ? 0 : load.stockIn}
@@ -169,4 +159,4 @@ class PrintComponent extends PureComponent {
     }
 }
 
-export default PrintComponent
+export default PrintRangeDate

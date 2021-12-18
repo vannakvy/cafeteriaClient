@@ -1,13 +1,13 @@
 import React, { useRef } from 'react'
 import { Button, Modal } from 'antd'
 import ReactToPrint from 'react-to-print';
-import PrintComponent from '../comp/printComponent';
 import { theme } from '../../../static/theme';
 import { CSVLink } from "react-csv";
 import { reportProduct } from '../../../asset/column/report';
 import { addIndex } from '../../../functions/fn';
+import PrintRangeDate from '../comp/printRangeDate';
 
-export default function PrintProductByDate({ open, setOpen, data }) {
+export default function PrintProductRangeDate({ open, setOpen, data }) {
     const componentRef = useRef()
 
     const csvReport = {
@@ -57,7 +57,7 @@ export default function PrintProductByDate({ open, setOpen, data }) {
                 />
             ]}
         >
-            <PrintComponent ref={componentRef} data={data} />
+            <PrintRangeDate ref={componentRef} data={data} />
         </Modal>
     )
 }

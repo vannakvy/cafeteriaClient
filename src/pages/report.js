@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { Col, Divider, Row } from 'antd'
 import React, { useState } from 'react'
 import GetProductByDate from '../components/report/modal/getProductByDate'
+import GetProductByRangeDate from '../components/report/modal/getProductByRangeDate'
 import { noticeAction } from '../functions/fn'
 import { GET_ALL_PRODUCT_NO_PAGE } from '../graphql/product'
 
@@ -14,10 +15,12 @@ export default function Report() {
     })
 
     const [openProductByDate, setOpenProductByDate] = useState(false)
+    const [openProductByRangeDate, setOpenProductByRangeDate] = useState(false)
 
     return (
         <div>
             <GetProductByDate open={openProductByDate} setOpen={setOpenProductByDate} productDB={productDB} />
+            <GetProductByRangeDate open={openProductByRangeDate} setOpen={setOpenProductByRangeDate} productDB={productDB} />
             <Row gutter={[16, 16]}>
                 <Col
                     xs={24}
@@ -42,8 +45,9 @@ export default function Report() {
                         >
                             <div
                                 className="go-generateBtn"
+                                onClick={() => setOpenProductByRangeDate(!openProductByRangeDate)}
                             >
-                                ទំនិញចេញចូល​រយៈពេលមួយខែ
+                                ទំនិញចេញចូលរវាងកាលបរិច្ឆេទ
                             </div>
                         </Col>
                         <Col
