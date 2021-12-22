@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e345e229.chunk.css",
+    "main.js": "/static/js/main.a640f1e6.chunk.js",
+    "main.js.map": "/static/js/main.a640f1e6.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.83c985de.js",
+    "runtime-main.js.map": "/static/js/runtime-main.83c985de.js.map",
+    "static/css/2.a95be28f.chunk.css": "/static/css/2.a95be28f.chunk.css",
+    "static/js/2.820bb61c.chunk.js": "/static/js/2.820bb61c.chunk.js",
+    "static/js/2.820bb61c.chunk.js.map": "/static/js/2.820bb61c.chunk.js.map",
+    "static/js/3.155a9615.chunk.js": "/static/js/3.155a9615.chunk.js",
+    "static/js/3.155a9615.chunk.js.map": "/static/js/3.155a9615.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.a95be28f.chunk.css.map": "/static/css/2.a95be28f.chunk.css.map",
+    "static/css/main.e345e229.chunk.css.map": "/static/css/main.e345e229.chunk.css.map",
+    "static/js/2.820bb61c.chunk.js.LICENSE.txt": "/static/js/2.820bb61c.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/TACTENG.89f59e5d.TTF",
+    "static/media/bagLoading.74b8eb55.gif": "/static/media/bagLoading.74b8eb55.gif",
+    "static/media/breadLoading.15de5bd9.gif": "/static/media/breadLoading.15de5bd9.gif",
+    "static/media/logo.3b1a1c67.png": "/static/media/logo.3b1a1c67.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.83c985de.js",
+    "static/css/2.a95be28f.chunk.css",
+    "static/js/2.820bb61c.chunk.js",
+    "static/css/main.e345e229.chunk.css",
+    "static/js/main.a640f1e6.chunk.js"
+  ]
+}
