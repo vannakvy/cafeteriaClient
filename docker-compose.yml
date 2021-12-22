@@ -1,0 +1,24 @@
+# version: "3"
+# services:
+#   nginx-react:
+#   container_name: ngixreactapp
+#   build:
+#     context: .
+#     dockerfile: Dockerfile
+#   ports:
+#     - 80:80
+#   environment:
+#     NODE_ENV: production
+
+version: "3"
+services:
+  react_mart_client:
+    container_name: react_mart_client
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "81:80"
+
+
+
