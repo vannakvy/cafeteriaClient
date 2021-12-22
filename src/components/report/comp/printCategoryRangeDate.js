@@ -1,13 +1,17 @@
 import { Col, Image, Row } from 'antd';
 import React, { PureComponent } from 'react';
 import Logo from '../../../asset/img/logo.png'
+import { convertDateToKh } from '../../../functions/fn';
 
-class PrintComponent extends PureComponent {
+class PrintCategoryRangeDate extends PureComponent {
     render() {
 
         let data = this.props?.data
+        let startDate = this.props?.date[0]
+        let endDate = this.props?.date[1]
 
         // console.log(data)
+        // console.log(date)
 
         return (
             <div
@@ -70,7 +74,7 @@ class PrintComponent extends PureComponent {
                                     color: "blue"
                                 }}
                              >
-                                 ការគ្រប់គ្រង់ស្តុកទំនិញចូល និងចេញ
+                                 ការគ្រប់គ្រង់ស្តុកប្រភេទទំនិញចូល និងចេញ
                              </span><br />
                              <span
                                 className="go-headerFont1 "
@@ -80,6 +84,16 @@ class PrintComponent extends PureComponent {
                              >
                                  សម្រាប់ ហ្គោគ្លូប៊ល ម៉ាត
                              </span>
+                             <br/>
+                             <br/>
+                             <span
+                                className="go-headerFont1"
+                                style={{
+                                    color: "blue"
+                                }}
+                            >
+                                {convertDateToKh(startDate)} - {convertDateToKh(endDate)}
+                            </span>
                          </center>
                     </Col>
                     <Col
@@ -110,13 +124,6 @@ class PrintComponent extends PureComponent {
                                             width: "100px"
                                         }}
                                     >
-                                        ដើមគ្រា
-                                    </th>
-                                    <th
-                                        style={{
-                                            width: "100px"
-                                        }}
-                                    >
                                         ទិញចូល
                                     </th>
                                     <th
@@ -131,7 +138,7 @@ class PrintComponent extends PureComponent {
                                             width: "100px"
                                         }}
                                     >
-                                        ចុងគ្រា
+                                        សរុប
                                     </th>
                                 </tr>
                                 {
@@ -143,9 +150,6 @@ class PrintComponent extends PureComponent {
                                                 </td>
                                                 <td>
                                                     {load.description}
-                                                </td>
-                                                <td>
-                                                    {load.openning}
                                                 </td>
                                                 <td>
                                                     {load.stockIn === null ? 0 : load.stockIn}
@@ -169,4 +173,4 @@ class PrintComponent extends PureComponent {
     }
 }
 
-export default PrintComponent
+export default PrintCategoryRangeDate

@@ -43,6 +43,13 @@ export const GET_REPORT_SALEORDER_RANGE_DATE = gql`
         getReportSaleOrderByRangeDate(input: $input) {
             id
             date
+            customer {
+                    id {
+                        lname
+                        fname
+                    }
+                    tel
+                }
             productCount
             subTotal
             tax
@@ -59,6 +66,11 @@ export const GET_REPORT_PO_BY_DATE = gql`
         getReportPurchaseOrderByRangeDate(input: $input) {
             id
             date
+            supplier {
+                lname
+                fname
+                tel
+            }
             productCount
             subTotal
             tax

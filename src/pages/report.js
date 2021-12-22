@@ -3,8 +3,11 @@ import { Col, Divider, Row } from 'antd'
 import React, { useState } from 'react'
 import GetProductByDate from '../components/report/modal/getProductByDate'
 import GetProductByRangeDate from '../components/report/modal/getProductByRangeDate'
+import GetCategoryByRangeDate from '../components/report/modal/getCategoryByRangeDate'
 import { noticeAction } from '../functions/fn'
 import { GET_ALL_PRODUCT_NO_PAGE } from '../graphql/product'
+import GetSaleOrderByRangeDate from '../components/report/modal/getSaleOrderByRangeDate'
+import GetPurchaseOrderByRangeDate from '../components/report/modal/getPurchaseOrderByRangeDate'
 
 export default function Report() {
     const { data: productDB } = useQuery(GET_ALL_PRODUCT_NO_PAGE, {
@@ -16,11 +19,18 @@ export default function Report() {
 
     const [openProductByDate, setOpenProductByDate] = useState(false)
     const [openProductByRangeDate, setOpenProductByRangeDate] = useState(false)
+    const [openCategoryByRangeDate, setOpenCategoryByRangeDate] = useState(false)
+    const [openSaleOrderByRangeDate, setOpenSaleOrderByRangeDate] = useState(false)
+    const [openPurchaseOrderByRangeDate, setOpenPurchaseOrderByRangeDate] = useState(false)
 
     return (
         <div>
             <GetProductByDate open={openProductByDate} setOpen={setOpenProductByDate} productDB={productDB} />
             <GetProductByRangeDate open={openProductByRangeDate} setOpen={setOpenProductByRangeDate} productDB={productDB} />
+            <GetCategoryByRangeDate open={openCategoryByRangeDate} setOpen={setOpenCategoryByRangeDate} />
+            <GetSaleOrderByRangeDate open={openSaleOrderByRangeDate} setOpen={setOpenSaleOrderByRangeDate} />
+            <GetPurchaseOrderByRangeDate open={openPurchaseOrderByRangeDate} setOpen={setOpenPurchaseOrderByRangeDate} />
+            
             <Row gutter={[16, 16]}>
                 <Col
                     xs={24}
@@ -56,6 +66,7 @@ export default function Report() {
                         >
                             <div
                                 className="go-generateBtn"
+                                onClick={() => setOpenCategoryByRangeDate(!openCategoryByRangeDate)}
                             >
                                 ប្រភេទទំនិញចេញចូល
                             </div>
@@ -74,6 +85,7 @@ export default function Report() {
                         >
                             <div
                                 className="go-generateBtn"
+                                onClick={() => setOpenSaleOrderByRangeDate(!openSaleOrderByRangeDate)}
                             >
                                 ការលក់តាមកាលបរិច្ឆេទ
                             </div>
@@ -92,6 +104,7 @@ export default function Report() {
                         >
                             <div
                                 className="go-generateBtn"
+                                onClick={() => setOpenPurchaseOrderByRangeDate(!openPurchaseOrderByRangeDate)}
                             >
                                 ការទិញតាមកាលបរិច្ឆេទ
                             </div>

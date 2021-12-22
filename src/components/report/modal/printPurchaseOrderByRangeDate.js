@@ -1,18 +1,40 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Modal } from 'antd'
 import ReactToPrint from 'react-to-print';
-import PrintProductDate from '../comp/printProductDate';
 import { theme } from '../../../static/theme';
 import { CSVLink } from "react-csv";
-import { reportProduct } from '../../../asset/column/report';
+import { reportProductRange } from '../../../asset/column/report';
 import { addIndex } from '../../../functions/fn';
+import PrintPurchaseOrderRangeDate from '../comp/printPurchaseRangeDate';
 
-export default function PrintProductByDate({ open, setOpen, data, date }) {
+export default function PrintPurchaseOrderByRangeDate({ open, setOpen, data, date }) {
     const componentRef = useRef()
+
+    const [dataFooter, setDataFooter] = useState({})
+
+    useEffect(() => {
+        if(data.length !== 0){
+            let subTotal = data.reduce((a, curr) => a + parseFloat(curr.subTotal),0)
+            let tax = data.reduce((a, curr) => a + parseFloat(curr.tax),0)
+            let offer = data.reduce((a, curr) => a + parseFloat(curr.offer),0)
+            let delivery = data.reduce((a, curr) => a + parseFloat(curr.delivery),0)
+            let grandTotal = data.reduce((a, curr) => a + parseFloat(curr.grandTotal),0)
+            let payment = data.reduce((a, curr) => a + parseFloat(curr.payment),0)
+
+            setDataFooter({
+                subTotal,
+                tax,
+                offer,
+                delivery,
+                grandTotal,
+                payment 
+            })
+        }
+    }, [data])
 
     const csvReport = {
         data: addIndex(data),
-        headers: reportProduct,
+        headers: reportProductRange,
         filename: 'ការគ្រប់គ្រង់ស្តុកទំនិញចូល_និងចេញ.xls'
     };
 
@@ -20,7 +42,7 @@ export default function PrintProductByDate({ open, setOpen, data, date }) {
         <Modal
             title="បោះពុម្ភ"
             visible={open}
-            width={1000}
+            width={1500}
             onCancel={() => setOpen(!open)}
             footer={[
                 <CSVLink
@@ -57,7 +79,7 @@ export default function PrintProductByDate({ open, setOpen, data, date }) {
                 />
             ]}
         >
-            <PrintProductDate ref={componentRef} data={data} date={date} />
+            <PrintPurchaseOrderRangeDate ref={componentRef} data={data} date={date} dataFooter={dataFooter} />
         </Modal>
     )
 }

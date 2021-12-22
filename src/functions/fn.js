@@ -1,4 +1,6 @@
 import { Image, notification } from "antd";
+import moment from "moment";
+import { dayKh, monthKh } from "../asset/data/formatKhDate";
 
 
 export const convertTel = (e) => {
@@ -290,4 +292,42 @@ export const addIndex = (e) => {
     }))
 
     return newArr
+}
+
+export const convertDateToKh = (e) => {
+    let day = moment(e).format("DD")
+    let month = moment(e).month()
+    let year = moment(e).format("YYYY")
+
+    let newDay = dayKh[parseInt(day[0])] + dayKh[parseInt(day[1])]
+    let newMonth = monthKh[parseInt(month)]
+    let newYear = dayKh[parseInt(year[0])] + dayKh[parseInt(year[1])] + dayKh[parseInt(year[2])] + dayKh[parseInt(year[3])]
+
+    let date = `ថ្ងៃទី${newDay} ខែ${newMonth} ឆ្នាំ${newYear}`
+
+    return date
+}
+
+export function numberWithCommas(num, scale) {
+
+    if (Math.round(num) !== num) {
+        if (Math.pow(0.1, scale) > num) {
+          return 0;
+        }
+        var sign = Math.sign(num);
+        var arr = ("" + Math.abs(num)).split(".");
+        if (arr.length > 1) {
+          if (arr[1].length > scale) {
+            var integ = +arr[0] * Math.pow(10, scale);
+            var dec = integ + (+arr[1].slice(0, scale) + Math.pow(10, scale));
+            var proc = +arr[1].slice(scale, scale + 1)
+            if (proc >= 5) {
+              dec = dec + 1;
+            }
+            dec = sign * (dec - Math.pow(10, scale)) / Math.pow(10, scale);
+            return dec.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
+        }
+      }
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

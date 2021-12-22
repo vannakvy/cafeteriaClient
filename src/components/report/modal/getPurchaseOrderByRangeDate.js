@@ -1,14 +1,14 @@
 import { useMutation } from '@apollo/client'
 import { Button, DatePicker, Form, Modal } from 'antd'
 import React, { useState } from 'react'
-import { GET_REPORT_PRODUCT_RANGE_DATE } from '../../../graphql/report'
+import { GET_REPORT_PO_BY_DATE } from '../../../graphql/report'
 import { theme } from '../../../static/theme'
-import PrintProductRangeDate from './printProductByRangeDate'
+import PrintPurchaseOrderByRangeDate from './printPurchaseOrderByRangeDate'
 
-export default function GetProductByRangeDate({ open, setOpen, productDB }) {
+export default function GetPurchaseOrderByRangeDate({ open, setOpen, productDB }) {
     let [form] = Form.useForm()
 
-    const [getReportProductByRangeDate] = useMutation(GET_REPORT_PRODUCT_RANGE_DATE)
+    const [getReportPurchaseOrderByRangeDate] = useMutation(GET_REPORT_PO_BY_DATE)
 
 
     const [data, setData] = useState([])
@@ -17,7 +17,7 @@ export default function GetProductByRangeDate({ open, setOpen, productDB }) {
     const [openPrint, setOpenPrint] = useState(false)
 
     const onFinish = async (values) => {
-        getReportProductByRangeDate({
+        getReportPurchaseOrderByRangeDate({
             variables: {
                 input: {
                     startDate: values.date[0],
@@ -25,7 +25,7 @@ export default function GetProductByRangeDate({ open, setOpen, productDB }) {
                 }
             },
             update(_,result){
-                const getResults = result?.data?.getReportProductByRangeDate
+                const getResults = result?.data?.getReportPurchaseOrderByRangeDate
                 // const getProducts = productDB?.getAllProducts
 
                 // console.log(getResults)
@@ -45,12 +45,12 @@ export default function GetProductByRangeDate({ open, setOpen, productDB }) {
 
     return (
         <Modal
-            title="ទំនិញចេញចូលដោយកាលបរិច្ឆេទ"
+            title="ការទិញចូលដោយកាលបរិច្ឆេទ"
             visible={open}
             onCancel={() => setOpen(!open)}
             footer={null}
         >
-            <PrintProductRangeDate open={openPrint} setOpen={setOpenPrint} data={data} date={date} />
+            <PrintPurchaseOrderByRangeDate open={openPrint} setOpen={setOpenPrint} data={data} date={date} />
             <Form
                 form={form}
                 name="getProductByDate"

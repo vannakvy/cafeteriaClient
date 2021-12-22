@@ -3,16 +3,16 @@ import { Button, Modal } from 'antd'
 import ReactToPrint from 'react-to-print';
 import { theme } from '../../../static/theme';
 import { CSVLink } from "react-csv";
-import { reportProduct } from '../../../asset/column/report';
+import { reportProductRange } from '../../../asset/column/report';
 import { addIndex } from '../../../functions/fn';
-import PrintRangeDate from '../comp/printRangeDate';
+import PrintProductRangeDate from '../comp/printProductRangeDate';
 
-export default function PrintProductRangeDate({ open, setOpen, data }) {
+export default function PrintProductByRangeDate({ open, setOpen, data, date }) {
     const componentRef = useRef()
 
     const csvReport = {
         data: addIndex(data),
-        headers: reportProduct,
+        headers: reportProductRange,
         filename: 'ការគ្រប់គ្រង់ស្តុកទំនិញចូល_និងចេញ.xls'
     };
 
@@ -57,7 +57,7 @@ export default function PrintProductRangeDate({ open, setOpen, data }) {
                 />
             ]}
         >
-            <PrintRangeDate ref={componentRef} data={data} />
+            <PrintProductRangeDate ref={componentRef} data={data} date={date} />
         </Modal>
     )
 }

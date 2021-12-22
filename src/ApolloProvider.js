@@ -15,11 +15,11 @@ import DataProvider from './context/dataProvider';
 const address = process.env.React_App_SERVER
 
 const httpLink = new HttpLink({
-  uri: `http://${address}`
+  uri: `https://${address}`
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://${address}`,
+  uri: `wss://${address}`,
   options: {
     reconnect: true
   }

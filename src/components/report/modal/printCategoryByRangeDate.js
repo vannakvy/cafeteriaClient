@@ -1,19 +1,19 @@
 import React, { useRef } from 'react'
 import { Button, Modal } from 'antd'
 import ReactToPrint from 'react-to-print';
-import PrintProductDate from '../comp/printProductDate';
 import { theme } from '../../../static/theme';
 import { CSVLink } from "react-csv";
-import { reportProduct } from '../../../asset/column/report';
+import { reportProductRange } from '../../../asset/column/report';
 import { addIndex } from '../../../functions/fn';
+import PrintCategoryRangeDate from '../comp/printCategoryRangeDate';
 
-export default function PrintProductByDate({ open, setOpen, data, date }) {
+export default function PrintCategoryByRangeDate({ open, setOpen, data, date }) {
     const componentRef = useRef()
 
     const csvReport = {
         data: addIndex(data),
-        headers: reportProduct,
-        filename: 'ការគ្រប់គ្រង់ស្តុកទំនិញចូល_និងចេញ.xls'
+        headers: reportProductRange,
+        filename: 'ការគ្រប់គ្រង់ស្តុកប្រភេទទំនិញចូល_និងចេញ.xls'
     };
 
     return (
@@ -57,7 +57,7 @@ export default function PrintProductByDate({ open, setOpen, data, date }) {
                 />
             ]}
         >
-            <PrintProductDate ref={componentRef} data={data} date={date} />
+            <PrintCategoryRangeDate ref={componentRef} data={data} date={date} />
         </Modal>
     )
 }

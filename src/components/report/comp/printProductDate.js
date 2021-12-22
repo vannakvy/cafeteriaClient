@@ -1,11 +1,13 @@
 import { Col, Image, Row } from 'antd';
 import React, { PureComponent } from 'react';
 import Logo from '../../../asset/img/logo.png'
+import { convertDateToKh } from '../../../functions/fn';
 
-class PrintRangeDate extends PureComponent {
+class PrintProductDate extends PureComponent {
     render() {
 
         let data = this.props?.data
+        let date = this.props?.date
 
         // console.log(data)
 
@@ -62,25 +64,33 @@ class PrintRangeDate extends PureComponent {
                             paddingBottom: 20
                         }}
                     >
-                         <center>
-                             <span
+                        <center>
+                            <span
                                 className="go-headerFont"
                                 style={{
                                     fontSize: 14,
                                     color: "blue"
                                 }}
-                             >
-                                 ការគ្រប់គ្រង់ស្តុកទំនិញចូល និងចេញ
-                             </span><br />
-                             <span
+                            >
+                                ការគ្រប់គ្រង់ស្តុកទំនិញចូល និងចេញ
+                            </span><br />
+                            <span
                                 className="go-headerFont1 "
                                 style={{
                                     color: "blue"
                                 }}
-                             >
-                                 សម្រាប់ ហ្គោគ្លូប៊ល ម៉ាត
-                             </span>
-                         </center>
+                            >
+                                សម្រាប់ ហ្គោគ្លូប៊ល ម៉ាត
+                            </span><br /><br />
+                            <span
+                                className="go-headerFont1"
+                                style={{
+                                    color: "blue"
+                                }}
+                            >
+                                {convertDateToKh(date)}
+                            </span>
+                        </center>
                     </Col>
                     <Col
                         xs={24}
@@ -110,6 +120,13 @@ class PrintRangeDate extends PureComponent {
                                             width: "100px"
                                         }}
                                     >
+                                        ដើមគ្រា
+                                    </th>
+                                    <th
+                                        style={{
+                                            width: "100px"
+                                        }}
+                                    >
                                         ទិញចូល
                                     </th>
                                     <th
@@ -124,7 +141,7 @@ class PrintRangeDate extends PureComponent {
                                             width: "100px"
                                         }}
                                     >
-                                        សរុប
+                                        ចុងគ្រា
                                     </th>
                                 </tr>
                                 {
@@ -136,6 +153,9 @@ class PrintRangeDate extends PureComponent {
                                                 </td>
                                                 <td>
                                                     {load.description}
+                                                </td>
+                                                <td>
+                                                    {load.openning}
                                                 </td>
                                                 <td>
                                                     {load.stockIn === null ? 0 : load.stockIn}
@@ -159,4 +179,4 @@ class PrintRangeDate extends PureComponent {
     }
 }
 
-export default PrintRangeDate
+export default PrintProductDate
