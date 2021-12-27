@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const CREATE_GENERATE_INVENTORY = gql`
-    mutation generateInventory($input: generateInvInput) {
+    mutation generateInventory($input: GenerateInvInput) {
         generateInventory(input: $input)
     }
 `
