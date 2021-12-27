@@ -229,7 +229,7 @@ class PrintSaleOrderRangeDate extends PureComponent {
                                                     {numberWithCommas(parseFloat(load.grandTotal), 2)}$
                                                 </td>
                                                 <td>
-                                                    {numberWithCommas(parseFloat(load.productCount), 2)}$
+                                                    {numberWithCommas(parseFloat(load.productCount), 2)}
                                                 </td>
                                             </tr>
                                         )

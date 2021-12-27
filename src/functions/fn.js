@@ -294,6 +294,32 @@ export const addIndex = (e) => {
     return newArr
 }
 
+export const addIndexSaleOrderReport = (e) => {
+    let newArr = []
+    e.map((load, index) => newArr.push({
+        ...load,
+        index: index+1,
+        name: `${load.customer.id.lname} ${load.customer.id.fname}`,
+        tel: load.customer.tel,
+        date: moment(load.date).format("MMM-DD, YYYY")
+    }))
+
+    return newArr
+}
+
+export const addIndexPurchaseOrderReport = (e) => {
+    let newArr = []
+    e.map((load, index) => newArr.push({
+        ...load,
+        index: index+1,
+        name: `${load.supplier.lname} ${load.supplier.fname}`,
+        tel: load.supplier.tel,
+        date: moment(load.date).format("MMM-DD, YYYY")
+    }))
+
+    return newArr
+}
+
 export const convertDateToKh = (e) => {
     let day = moment(e).format("DD")
     let month = moment(e).month()

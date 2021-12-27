@@ -3,8 +3,8 @@ import { Button, Modal } from 'antd'
 import ReactToPrint from 'react-to-print';
 import { theme } from '../../../static/theme';
 import { CSVLink } from "react-csv";
-import { reportProductRange } from '../../../asset/column/report';
-import { addIndex } from '../../../functions/fn';
+import { reportSaleOrderRange } from '../../../asset/column/report';
+import { addIndexPurchaseOrderReport } from '../../../functions/fn';
 import PrintPurchaseOrderRangeDate from '../comp/printPurchaseRangeDate';
 
 export default function PrintPurchaseOrderByRangeDate({ open, setOpen, data, date }) {
@@ -33,8 +33,8 @@ export default function PrintPurchaseOrderByRangeDate({ open, setOpen, data, dat
     }, [data])
 
     const csvReport = {
-        data: addIndex(data),
-        headers: reportProductRange,
+        data: addIndexPurchaseOrderReport(data),
+        headers: reportSaleOrderRange,
         filename: 'ការគ្រប់គ្រង់ស្តុកទំនិញចូល_និងចេញ.xls'
     };
 

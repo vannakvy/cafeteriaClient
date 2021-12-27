@@ -188,6 +188,13 @@ class PrintPurchaseOrderRangeDate extends PureComponent {
                                     >
                                         តម្លៃសរុបចុងក្រោយ
                                     </th>
+                                    <th
+                                    // style={{
+                                    //     width: "100px"
+                                    // }}
+                                    >
+                                        ទំនិញ
+                                    </th>
                                 </tr>
                                 {
                                     data.map((load, index) => {
@@ -230,6 +237,9 @@ class PrintPurchaseOrderRangeDate extends PureComponent {
                                                 </td>
                                                 <td>
                                                     {numberWithCommas(load.grandTotal, 2)}$
+                                                </td>
+                                                <td>
+                                                    {numberWithCommas(parseFloat(load.productCount), 2)}
                                                 </td>
                                             </tr>
                                         )
